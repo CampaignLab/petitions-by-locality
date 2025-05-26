@@ -46,6 +46,13 @@ Source: Office for National Statistics licensed under the Open Government Licenc
 
 Contains OS data © Crown copyright and database right 2024.
 
+### Populations 
+
+The population figures are calculated using the data from the [House of Commons library dashboard](https://commonslibrary.parliament.uk/constituency-statistics-population-by-age/).
+
+Contains Parliamentary information licensed under the [Open Parliament Licence v3.0.](https://www.parliament.uk/site-information/copyright-parliament/open-parliament-licence/)
+
+
 ## Screenshots
 
 ![image](https://github.com/user-attachments/assets/a3a05bcc-ad04-4170-9b8c-1b933c560a9e)

@@ -64,6 +64,13 @@ document.getElementById('loadDataBtn').addEventListener('click', async function(
         }
         window.constituencyBoundariesGeoJSON = await constituencyBoundariesResponse.json(); // Store boundaries data globally
 
+        // Fetch constituency populations data 
+        const populationsResponse = await fetch('http://localhost:3000/constituencyPopulations');
+        if (!populationsResponse.ok) {
+            throw new Error(`Failed to fetch constituency populations data! status: ${populationsResponse.status}`);
+        }
+        window.constituencyPopulations = await populationsResponse.json(); // Store populations data globally;
+
         // Once data is loaded, hide the initial load content
         initialLoadContent.style.display = 'none';
 
@@ -104,6 +111,9 @@ function populateConstituencySelector(constituencies) {
     // Event listener for constituency selection change
     select.addEventListener("change", function() {
         const selectedConstituency = this.value;
+
+        window.currentlySelectedConstituencyName = selectedConstituency; // Store the selected constituency globally
+
         const constituencyData = signaturesByConstituency[selectedConstituency];
 
         // Filter topics based on the selected constituency's petitions
@@ -539,12 +549,22 @@ function populateTable(data) {
         row.appendChild(countCell);
 
         // Calculate salience ratio
+    
         const ukTotal = getUKTotal(petitionId);
-        const expectedProportion = 1 / 650; // Assuming 650 constituencies
+
+      
+        const constituencyPopulation = window.constituencyPopulations[window.currentlySelectedConstituencyName] || 0;
+
+        const totalPopulation = window.constituencyPopulations['Grand Total'] || 0;
+        const expectedProportion = totalPopulation > 0 ? (constituencyPopulation / totalPopulation) : 0;
+
         const actualProportion = ukTotal > 0 ? (details.count / ukTotal) : 0;
-        const salience = ukTotal > 0 ? (actualProportion / expectedProportion) : 0;
+
+        const salience = expectedProportion > 0 && ukTotal > 0 ? (actualProportion / expectedProportion) : 0;
+
         const formattedSalience = salience.toFixed(2); // Format to 2 decimal places
 
+         // Default to 0 if not found
         // Local Salience Category cell (Column 2)
         const salienceInfo = getSalienceCategory(salience);
         const salienceCategoryCell = document.createElement("td");

@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>UK Petitions</title>
 
-     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-     crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
 
     <link rel="stylesheet" href="styles/global.css" />
     <link rel="stylesheet" href="styles/localities.css" />
@@ -40,9 +40,9 @@
             <input type="date" id="filterCreatedDate" class="control">
             <select id="filterSalienceCategory" class="control">
                 <option value="all">Local Salience: All</option>
-                <option value="more">More salient (>1)</option>
+                <option value="more">More salient (&gt;1)</option>
                 <option value="about">About as salient (=1)</option>
-                <option value="less">Less salient (<1)</option>
+                <option value="less">Less salient (&lt;1)</option>
             </select>
             <select id="filterWrittenResponse" class="control">
                 <option value="all">Written response?: All</option>
@@ -67,13 +67,17 @@
 
         <table id="dataTable">
             <colgroup id="overview-group" class="overview-group">
-                <col /><col /><col /><col /></colgroup>
+                <col /><col /><col /><col />
+            </colgroup>
             <colgroup id="uk-wide-info-group" class="uk-wide-info-group">
-                <col class="uk-wide-info-col topic-col" /><col class="uk-wide-info-col" /><col class="uk-wide-info-col" /></colgroup>
+                <col class="uk-wide-info-col topic-col" /><col class="uk-wide-info-col" /><col class="uk-wide-info-col" />
+            </colgroup>
             <colgroup id="response-group" class="response-group">
-                <col class="response-col" /><col class="response-col" /></colgroup>
+                <col class="response-col" /><col class="response-col" />
+            </colgroup>
             <colgroup id="details-group" class="details-group">
-                <col class="details-col" /><col class="details-col" /></colgroup>
+                <col class="details-col" /><col class="details-col" />
+            </colgroup>
             <thead>
                 <tr>
                     <th colspan="4" class="colgroup-header">Overview</th>
@@ -86,7 +90,8 @@
                     <th id="countHeader" data-sort="number">Signatures</th>
                     <th data-sort="salience">Local Salience</th>
                     <th data-sort="number">Salience Ratio</th>
-                    <th class="uk-wide-info-col topic-col">Topic</th> <th class="uk-wide-info-col" data-sort="number">UK Total</th>
+                    <th class="uk-wide-info-col topic-col">Topic</th>
+                    <th class="uk-wide-info-col" data-sort="number">UK Total</th>
                     <th class="uk-wide-info-col" data-sort="text">State</th>
                     <th class="response-col">Written response?</th>
                     <th class="response-col">Debated?</th>
@@ -164,6 +169,42 @@
 
         <div class="collapsible-section">
             <div class="collapsible-header">
+                <h1>What is salience?</h1>
+                <div class="collapse-icon"></div>
+            </div>
+            <div class="collapsible-content">
+                <p>The goal of the salience metric is to show whether a petition is more or less popular in a given constituency than is to be expected.</p>
+                <p>This should help make it clear whether an issue in a constituency is as popular as it is nationally, more popular than it is nationally, or less popular than it is nationally.</p>
+                <p>To do that, we use the following formula: </p>
+                <div class="formula-container">
+
+                    <div class="formula">
+                        Salience = 
+                        <span class="fraction">
+                            <span class="fraction-top">
+                                <span class="variable">S<span class="subscript">c</span></span> / <span class="variable">S<span class="subscript">t</span></span>
+                            </span>
+                            <span class="fraction-bottom">
+                                <span class="variable">P<span class="subscript">c</span></span> / <span class="variable">P<span class="subscript">t</span></span>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="description">
+                    <strong>Where:</strong><br>
+                    S<sub>c</sub> = Signatures for the petition in a constituency<br>
+                    S<sub>t</sub> = Total signatures for that petition across all constituencies<br>
+                    P<sub>c</sub> = Population of that constituency<br>
+                    P<sub>t</sub> = Total population of all constituencies
+                </div>
+                <p>If this value is &gt;1, then the petition is more salient in the constituency than it is nationally. If it is &lt;1, the petition is less salient than it is nationally.</p>
+            </div>
+
+        </div>
+
+        <div class="collapsible-section">
+            <div class="collapsible-header">
                 <h1>Sources &amp; licences</h1>
                 <div class="collapse-icon"></div>
             </div>
@@ -179,6 +220,9 @@
                 <p><strong>Source: Office for National Statistics licensed under the Open Government Licence v.3.0. Contains OS data © Crown copyright and database right 2024.</strong></p>
                 <h2>The map</h2>
                 <p>The map data itself comes from <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>.</p>
+                <h2>The constituency populations data</h2>
+                <p>The populations are calculated using data from the <a href="https://commonslibrary.parliament.uk/constituency-statistics-population-by-age/">House of Commons library.</a></p>
+                <p><strong>Contains Parliamentary information licensed under the <a href="https://www.parliament.uk/site-information/copyright-parliament/open-parliament-licence/">Open Parliament Licence v3.0</a>.</strong></p>
             </div>
         </div>
     </div>
@@ -197,8 +241,9 @@
     <script src="scripts/localities.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-     crossorigin=""></script>
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
     <script src="scripts/topics.js"></script>
+
 </body>
 </html>

@@ -268,3 +268,54 @@ footer {
         height: 15vh; /* Adjust height for smaller screens */
     }
 }
+
+.formula-container {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border: 1px solid #f0f0f0;
+    max-width: 600px;
+    margin: 0 auto;
+}
+.formula {
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.fraction {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    margin: 0 8px;
+    position: relative;
+}
+
+.fraction-top,
+.fraction-bottom {
+    display: block;
+    padding: 8px 12px;
+    font-size: 16px;
+    line-height: 1.2;
+}
+
+.fraction-top {
+    border-bottom: 2px solid #333;
+    margin-bottom: 2px;
+}
+
+.fraction-bottom {
+    margin-top: 2px;
+}
+
+.variable {
+    font-style: italic;
+    font-weight: 500;
+}
+
+.subscript {
+    font-size: 0.8em;
+    vertical-align: sub;
+}
