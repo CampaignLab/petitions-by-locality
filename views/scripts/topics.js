@@ -21,6 +21,10 @@ const chartColors = {
   defaultBorder: 'rgba(96, 125, 139, 1)' // Darker grey-blue
 };
 
+/**
+ * Get the topics data from the backend API.
+ * @returns 
+ */
 async function fetchTopicsData() {
   try {
     const response = await fetch('http://localhost:3000/topicsData');
@@ -35,6 +39,11 @@ async function fetchTopicsData() {
   }
 }
 
+/**
+ * Calculates the percentage of petitions by topic.
+ * @param {Object} topicsData - A map of petitionId to topic.
+ * @returns {Object} An object where keys are topics and values are objects with percentage and raw count. 
+*/
 async function calculatePercentageOfPetitionsByTopic(topicsData) {
   const topicCounts = {};
   let totalPetitions = 0;
@@ -61,6 +70,11 @@ async function calculatePercentageOfPetitionsByTopic(topicsData) {
   return topicPercentages;
 }
 
+/**
+ * Calculates the percentage of signatures (ie across all petitions) in a given topic.
+ * @param {Object} topicsData A map of petitionId to topic.
+ * @returns {Object}  An object where keys are topics and values are objects with percentage and raw count of signatures.
+ */
 async function calculatePercentageOfSignaturesByTopic(topicsData) {
   const rawPetitionsData = window.rawPetitionsData;
   if (!rawPetitionsData) {
@@ -117,6 +131,9 @@ async function calculatePercentageOfSignaturesByTopic(topicsData) {
   return topicSignaturePercentages;
 }
 
+/**
+ * Loads and processes the topic data, calculating percentages of petitions and signatures by topic.  
+ */
 async function loadAndProcessTopicData() {
   const topicsData = await fetchTopicsData(); // This is the map of petitionId -> topic
   if (!topicsData) {
@@ -226,68 +243,13 @@ function populatePetitionsTable(targetElementId, petitions) {
   container.appendChild(scrollContainer); // Append scroll container to the target element
 }
 
-
 /**
- * Updates the detailed analysis section with a title and populates the petitions table.
- * @param {string} titleText The text for the title of the detailed analysis section.
- * @param {string} type 'group' or 'topic' to indicate what was clicked.
- * @param {string} name The actual group name or topic name to use for filtering.
- */
-function updateTopicDetailsSection(titleText, type, name) {
-  const topicDetailsSection = document.getElementById('topicDetailsSection');
-  const topicDetailsTitle = document.getElementById('topicDetailsTitle');
-  const topicDetailsLeftTop = document.getElementById('topicDetailsLeftTop'); // Get the top left element
-  const topicDetailsLeftBottom = document.getElementById('topicDetailsLeftBottom'); // Get the bottom left element
-  const topicDetailsRight = document.getElementById('topicDetailsRight');
-
-  if (topicDetailsSection && topicDetailsTitle && topicDetailsLeftTop && topicDetailsLeftBottom && topicDetailsRight) {
-    topicDetailsTitle.textContent = `Petitions about ${titleText}`;
-    
-    // Filter petitions based on type and name
-    const rawPetitionsData = window.rawPetitionsData;
-    const topicsData = allProcessedTopicData.topicsData; // Get the raw topics data for lookup
-    let relevantPetitions = [];
-
-    for (const petitionId in rawPetitionsData) {
-      if (rawPetitionsData.hasOwnProperty(petitionId)) {
-        const petition = rawPetitionsData[petitionId];
-        const petitionTopic = topicsData[petitionId]; // Get topic from topicsData
-
-        if (type === 'group') {
-          // If a group was clicked, check if the petition's topic is in that group
-          if (topicGroups[name] && topicGroups[name].includes(petitionTopic)) {
-            relevantPetitions.push(petition);
-          }
-        } else if (type === 'topic') {
-          // If an individual topic was clicked, check if the petition's topic matches
-          if (petitionTopic === name) {
-            relevantPetitions.push(petition);
-          }
-        }
-      }
-    }
-
-    // Calculate totals for the overview
-    const totalPetitionsInSelection = relevantPetitions.length;
-    const totalSignaturesInSelection = relevantPetitions.reduce((sum, petition) => {
-      return sum + (petition.attributes?.signature_count || 0);
-    }, 0);
-
-    // Populate the top-left overview section
-    topicDetailsLeftTop.innerHTML = `
-      <h3>Overview for ${titleText}</h3>
-      <ul>
-        <li>Total number of petitions about topic: <strong>${totalPetitionsInSelection.toLocaleString()}</strong></li>
-        <li>Total number of signatures for all petitions about topic: <strong>${totalSignaturesInSelection.toLocaleString()}</strong></li>
-      </ul>
-    `;
-
-    topicDetailsLeftBottom.innerHTML = `<h3>Where have petitions about ${titleText} been signed?</h3>
-    <div id="mapDiv"></div>`; 
-    
-    // Create the map 
-
-    var map = L.map('mapDiv').setView([55.78, -5.96], 5);
+ * Creates a map visualisation of petitions by constituency.
+ * @param {string} visualisationMode The mode of visualisation ('signatures', 'salience', or 'weightedSignatures'). 
+ * @param {Array<Object>} relevantPetitions An array of petition objects to visualise - should already have been filtered. 
+ * */
+function createMap(visualisationMode = 'signatures', relevantPetitions = []) {
+var map = L.map('mapDiv').setView([55.78, -5.96], 5);
     
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
@@ -301,7 +263,7 @@ function updateTopicDetailsSection(titleText, type, name) {
 
    
     // This map shows, in each constituency, the number of signatures (not number of petitions - make this clear). 
-
+    
     let signaturesInThisTopicByConstituency = {}; 
     let empties = [];
     for (const petition of relevantPetitions) {
@@ -393,6 +355,90 @@ function updateTopicDetailsSection(titleText, type, name) {
 
     geojsonLayer.addTo(map); 
 
+}
+
+/**
+ * Updates the detailed analysis section with a title and populates the petitions table.
+ * @param {string} titleText The text for the title of the detailed analysis section.
+ * @param {string} type 'group' or 'topic' to indicate what was clicked.
+ * @param {string} name The actual group name or topic name to use for filtering.
+ */
+function updateTopicDetailsSection(titleText, type, name) {
+  const topicDetailsSection = document.getElementById('topicDetailsSection');
+  const topicDetailsTitle = document.getElementById('topicDetailsTitle');
+  const topicDetailsLeftTop = document.getElementById('topicDetailsLeftTop'); // Get the top left element
+  const topicDetailsLeftBottom = document.getElementById('topicDetailsLeftBottom'); // Get the bottom left element
+  const topicDetailsRight = document.getElementById('topicDetailsRight');
+
+  if (topicDetailsSection && topicDetailsTitle && topicDetailsLeftTop && topicDetailsLeftBottom && topicDetailsRight) {
+    topicDetailsTitle.textContent = `Petitions about ${titleText}`;
+    
+    // Filter petitions based on type and name
+    const rawPetitionsData = window.rawPetitionsData;
+    const topicsData = allProcessedTopicData.topicsData; // Get the raw topics data for lookup
+    let relevantPetitions = [];
+
+    for (const petitionId in rawPetitionsData) {
+      if (rawPetitionsData.hasOwnProperty(petitionId)) {
+        const petition = rawPetitionsData[petitionId];
+        const petitionTopic = topicsData[petitionId]; // Get topic from topicsData
+
+        if (type === 'group') {
+          // If a group was clicked, check if the petition's topic is in that group
+          if (topicGroups[name] && topicGroups[name].includes(petitionTopic)) {
+            relevantPetitions.push(petition);
+          }
+        } else if (type === 'topic') {
+          // If an individual topic was clicked, check if the petition's topic matches
+          if (petitionTopic === name) {
+            relevantPetitions.push(petition);
+          }
+        }
+      }
+    }
+
+    // Calculate totals for the overview
+    const totalPetitionsInSelection = relevantPetitions.length;
+    const totalSignaturesInSelection = relevantPetitions.reduce((sum, petition) => {
+      return sum + (petition.attributes?.signature_count || 0);
+    }, 0);
+
+     // --- MODIFICATION START: Add map visualization controls ---
+    const mapVizControlsHTML = `
+      <div id="mapVizControlsContainer" class="map-viz-controls">
+        <strong>Visualise map by:</strong>
+        <div class="map-viz-options">
+          <label for="vizSignatures">
+            <input type="radio" name="mapVizType" value="signatures" id="vizSignatures" checked> Signatures
+          </label>
+          <label for="vizSalience">
+            <input type="radio" name="mapVizType" value="salience" id="vizSalience"> Salience
+          </label>
+          <label for="vizWeightedSignatures">
+            <input type="radio" name="mapVizType" value="weightedSignatures" id="vizWeightedSignatures"> Signatures weighted by salience
+          </label>
+        </div>
+      </div>
+    `;
+    // --- MODIFICATION END ---
+    // Populate the top-left overview section
+    topicDetailsLeftTop.innerHTML = `
+      <h3>Overview for ${titleText}</h3>
+      <ul>
+        <li>Total number of petitions about topic: <strong>${totalPetitionsInSelection.toLocaleString()}</strong></li>
+        <li>Total number of signatures for all petitions about topic: <strong>${totalSignaturesInSelection.toLocaleString()}</strong></li>
+      </ul>
+      ${mapVizControlsHTML} <!-- Add map visualization controls here -->
+    `;
+
+    topicDetailsLeftBottom.innerHTML = `<h3>Where have petitions about ${titleText} been signed?</h3>
+    <div id="mapDiv"></div>`; 
+    
+    // Create the map 
+
+    createMap('signatures', relevantPetitions);
+
+    
     populatePetitionsTable('topicDetailsRight', relevantPetitions);
     topicDetailsSection.style.display = 'block'; // Make the section visible
   }

@@ -48,6 +48,8 @@ const filePath = './data/constituencies_data.json';
 
 /**
  * Loads petitions data from a specified JSON file.
+ * @param {string} file - The path to the JSON file containing petitions data.
+ * @returns {Object} The parsed JSON object containing petitions data.
  */
 function loadPetitions(file) {
   try {
@@ -61,6 +63,7 @@ function loadPetitions(file) {
 
 /**
  * Loads previously saved petition topics from a specified JSON file.
+ * @param {string} filepath - The path to the JSON file containing saved petition topics.
  */
 function loadSavedPetitionTopics(filepath) {
   try {
@@ -83,6 +86,8 @@ const LLMWrapper = limiter.wrap(async function (prompt) {
 
 /**
  * Extracts the topic of a petition using an LLM.
+ * @param {Object} petition - The petition object - the schema is from petitions.parliament.uk.
+ * @param {Object} savedPetitionsObject - An object containing previously saved topics for petitions.
  */
 async function extractTopic(petition, savedPetitionsObject) {
   if (savedPetitionsObject && petition.id in savedPetitionsObject) {
@@ -110,6 +115,8 @@ Please provide the topic:`;
 
 /**
  * Main function to process petitions, extract topics, and save them.
+ * @param {string} outputPath - The path where the topics by petition will be saved.
+ * @param {string} [savedPetitionTopicsPath=null] - The path to previously saved petition topics, if any. Use this to ensure chaching, so you don't need to make 5000 llm requests every time you update.
  */
 async function main(outputPath, savedPetitionTopicsPath = null) {
   let savedPetitionTopics = {};

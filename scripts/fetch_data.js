@@ -15,6 +15,10 @@ const constituenciesDataPath = path.join(dataDir, 'constituencies_data.json');
 const topicsByPetitionPath = path.join(dataDir, 'topics_by_petition.json');
 const savedTopicsPath = path.join(dataDir, 'SAVED_topics_by_petition.json');
 
+/**
+ * The main function to fetch all petitions and process them. 
+ * This should probably be scheduled to run eg once a day.
+ */
 async function main() {
     console.log("See about for information about data sources and licences.")
     const args = process.argv.slice(2);

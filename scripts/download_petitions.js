@@ -2,13 +2,20 @@ import fs from 'fs';
 
 const START_URL = 'https://petition.parliament.uk/petitions.json?state=all';
 
+/**
+ *  Helper function to fetch JSON data from a URL. 
+* @param {string} url - The URL to fetch data from.
+*/
 async function fetchJson(url) {
     // fetch is globally available in Node.js v18+ in ES module context
     const res = await fetch(url);
     if (!res.ok) throw new Error(`Failed to fetch ${url}: ${res.status}`);
     return await res.json();
 }
-
+/**
+ * Fetch all the petitions from the UK Parliament petitions API and save them to a file.
+ * @param {*} outputPath 
+ */
 async function fetchAllPetitions(outputPath) {
     let url = START_URL;
     const allPetitions = [];

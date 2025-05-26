@@ -1,0 +1,17 @@
+{
+  "source": {
+    "include": ["scripts/", "views/scripts/"],
+    "exclude": ["node_modules"]
+  },
+  "opts": {
+    "destination": "docs"
+  },
+  "plugins": ["plugins/markdown"],
+  "templates": {
+    "cleverlinks": false,
+    "monospaceLinks": false,
+    "default": {
+      "outputSourceFiles": true
+    }
+  }
+}

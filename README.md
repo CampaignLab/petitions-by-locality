@@ -15,7 +15,7 @@ This is a WIP project.
 
 ## TODOs:
 - Weight constituencies by population, not 1/650 (population might be population or registered voters) DONE
-- Implelement proper topics caching non-manually 
+- Implelement proper topics caching non-manually DONE
 - Move on to AWS? 
 - Do things with the topics data 
     - Topics dashboard ideas: which topics are popular where? (ie on a map) DONE
