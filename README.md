@@ -10,9 +10,8 @@ This is a WIP project.
     - GEMINI_API_KEY - your API key 
     - GEMINI_MODEL_CODE - the code for the model you want to use 
     - GEMINI_RATE_LIMIT - a rate limit you want to use. This is per minute. 
-4. Run `$ npm fetch-data` to fetch the data and associate petitions with topics. 
-  - TODO: at the moment, this does not cache topics, so you will need to do this manually by creating SAVED_topics_by_petition.json - this is to be fixedASAP. 
-5.  Run `$npm start` and navigate to `localhost:3000`. 
+4. Run `$ npm fetch-data` in the root of the repo to fetch the data and associate petitions with topics. 
+5. Run `$npm start` and navigate to `localhost:3000`. 
 
 ## TODOs:
 - Weight constituencies by population, not 1/650 (population might be population or registered voters) DONE

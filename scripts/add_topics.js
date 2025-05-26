@@ -76,17 +76,17 @@ function loadSavedPetitionTopics(filepath) {
   }
 }
 
-// Wrap the Gemini request function with the rate limiter
+// Wrap the LLM request function with the rate limiter
 const LLMWrapper = limiter.wrap(async function (prompt) {
   return await makeGeminiRequest(prompt);
 });
 
 /**
- * Extracts the topic of a petition using the Gemini LLM.
+ * Extracts the topic of a petition using an LLM.
  */
 async function extractTopic(petition, savedPetitionsObject) {
   if (savedPetitionsObject && petition.id in savedPetitionsObject) {
-    console.log(`Petition ${petition.id} already has a topic: ${savedPetitionsObject[petition.id]}`);
+    // console.log(`Petition ${petition.id} already has a topic: ${savedPetitionsObject[petition.id]}`);
     return savedPetitionsObject[petition.id];
   }
 
@@ -137,17 +137,25 @@ async function main(outputPath, savedPetitionTopicsPath = null) {
     topicsByPetition[petitionID] = petitionTopic;
 
     fs.writeFileSync(outputPath, JSON.stringify(topicsByPetition, null, 2), 'utf-8');
-    console.log(`Processed petition ${petitionID}: ${petitionTopic}`);
+    // console.log(`Processed petition ${petitionID}: ${petitionTopic}`);
   }
 
   progressBar.stop();
   console.log("All petitions processed.");
+
+  // Updated SAVED_topics_by_petition.json
+  if (savedPetitionTopicsPath == null) {
+    savedPetitionTopicsPath = './data/SAVED_topics_by_petition.json';
+  }
+  fs.writeFileSync(savedPetitionTopicsPath, JSON.stringify(topicsByPetition, null, 2), 'utf-8', (err) => {
+    if (err) console.error(`Could not save topics to ${savedPetitionTopicsPath}:`, err);
+  });
+
 }
 
 // Export the main function
 export { main };
 
-// Execute main if run directly
-const outputPathForTopics = './data/topics_by_petition.json';
-const savedTopicsPathForRun = './data/SAVED_topics_by_petition.json';
-main(outputPathForTopics, savedTopicsPathForRun).catch(console.error);
+// const outputPathForTopics = './data/topics_by_petition.json';
+// const savedTopicsPathForRun = './data/SAVED_topics_by_petition.json';
+// main(outputPathForTopics, savedTopicsPathForRun).catch(console.error);
