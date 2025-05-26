@@ -1,12 +1,13 @@
 {
   "name": "petitions-by-locality",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "An app for understanding UK petitions data by locality.",
   "main": "app.js",
   "type": "module",
   "scripts": {
     "start": "node --watch app.js",
-    "fetch-data": "node scripts/fetch_data.js --extract_topics"
+    "fetch-data": "node scripts/fetch_data.js --extract_topics",
+    "build-docs": "jsdoc -d docs scripts/ views/scripts/ README.md"
   },
   "dependencies": {
     "@google/genai": "^1.0.0",
@@ -14,6 +15,7 @@
     "cli-progress": "^3.12.0",
     "csv-parser": "^3.2.0",
     "dotenv": "^16.5.0",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "jsdoc": "^4.0.4"
   }
 }
