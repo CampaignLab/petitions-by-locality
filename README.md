@@ -11,19 +11,35 @@ This is a WIP project.
     - GEMINI_MODEL_CODE - the code for the model you want to use 
     - GEMINI_RATE_LIMIT - a rate limit you want to use. This is per minute. 
 4. Run `$ npm fetch-data` in the root of the repo to fetch the data and associate petitions with topics. 
-5. Run `$npm start` and navigate to `localhost:3000`. 
+5. Run `$ npm start` and navigate to `localhost:3000`. 
 
-## TODOs:
-- Weight constituencies by population, not 1/650 (population might be population or registered voters) DONE
-- Implelement proper topics caching non-manually DONE
-- Move on to AWS? 
-- Do things with the topics data 
-    - Topics dashboard ideas: which topics are popular where? (ie on a map) DONE
-    - Click into a topic - what petitions have been created with this topic over time? DONE
-    - how salient is a given topic in your constituency NOT DONE
-    - do topics vary by salience etc in different areas (I'm sure they do) NOT DONE
-    - other interesting questions?
-    - Parliamntary boundaries GeoJSON: https://www.data.gov.uk/dataset/90293fcf-9268-4a1a-be3d-d4a20d314604/westminster-parliamentary-constituencies-july-2024-names-and-codes-in-the-uk-v2
+If you want to build the docs using jsdoc, run `$ npm run build-docs.`
+
+## How is the app structured?
+
+The code should all be quite self-explanatory and mostly uses docsstrings. 
+
+The structure of the app itself is: 
+
+- scripts/ 
+  - add_topics.js - uses an LLM to assign topics to petitions 
+  - download_petitions.js - gets the petitions from the petitions.parliament.uk site 
+  - fetch_data.js - runs all the other data getting/annotatating scripts. 
+  - process_petitions.js - does the actual grouping by locality. 
+- views/ contains the front end 
+  - index.html - the app is a single-page app, all of which are viewed here. THere are three views: "by locality", which shows the petitions in a given locality and allows filtering; "by topics", which visualises the topics, and "about", which is static content with licences. 
+  - scripts/ 
+    - localities.js - calculates salience, handles the filtering and displaying petitions including their details. 
+    - topics.js - visualises the petitions using charts.js. 
+    - viewSwitcher.js - handles switching between views 
+  - styles/ 
+    - global.css - global styles 
+    - localities.css - styles for localities view 
+    - topics.css - styles for topics view 
+
+
+
+
 
 ## Acknowledgements / licences for data used
 

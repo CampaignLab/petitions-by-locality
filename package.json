@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node --watch app.js",
     "fetch-data": "node scripts/fetch_data.js --extract_topics",
-    "build-docs": "jsdoc -d docs scripts/ views/scripts/"
+    "build-docs": "jsdoc -d docs scripts/ views/scripts/ README.md"
   },
   "dependencies": {
     "@google/genai": "^1.0.0",
