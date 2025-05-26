@@ -16,8 +16,7 @@ const topicsByPetitionPath = path.join(dataDir, 'topics_by_petition.json');
 const savedTopicsPath = path.join(dataDir, 'SAVED_topics_by_petition.json');
 
 async function main() {
-    console.log("Contains public sector information licensed under the Open Government Licence v3.0.\nContains Parliamentary information licensed under the Open Parliament Licence v3.0.");
-
+    console.log("See about for information about data sources and licences.")
     const args = process.argv.slice(2);
     const shouldExtractTopics = args.includes('--extract_topics');
 
