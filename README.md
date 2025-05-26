@@ -19,10 +19,10 @@ This is a WIP project.
 - Implelement proper topics caching non-manually 
 - Move on to AWS? 
 - Do things with the topics data 
-    - Topics dashboard ideas: which topics are popular where? (ie on a map)
-    - Click into a topic - what petitions have been created with this topic over time? 
-    - how salient is a given topic in your constituency 
-    - do topics vary by salience etc in different areas (I'm sure they do)
+    - Topics dashboard ideas: which topics are popular where? (ie on a map) DONE
+    - Click into a topic - what petitions have been created with this topic over time? DONE
+    - how salient is a given topic in your constituency NOT DONE
+    - do topics vary by salience etc in different areas (I'm sure they do) NOT DONE
     - other interesting questions?
     - Parliamntary boundaries GeoJSON: https://www.data.gov.uk/dataset/90293fcf-9268-4a1a-be3d-d4a20d314604/westminster-parliamentary-constituencies-july-2024-names-and-codes-in-the-uk-v2
 
