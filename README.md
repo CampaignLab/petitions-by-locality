@@ -4,6 +4,8 @@ This is a WIP project.
 
 ## How to install me
 
+(See slightly more detailed instructions in INSTALL.md.)
+
 1. Download (ie `$ git clone`). 
 2. Install dependencies (`$ npm i`)
 3. For the AI bits, create a `.env` file: 
