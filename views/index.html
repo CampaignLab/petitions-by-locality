@@ -145,86 +145,63 @@
     </div>
 
     <div id="aboutView" class="content-view" style="display:block;">
-        <div class="collapsible-section">
-            <div class="collapsible-header">
-                <h1>What is this?</h1>
-                <div class="collapse-icon"></div>
-            </div>
-            <div class="collapsible-content">
-                <p>This tool allows you to view UK petitions data by locality.</p>
-                <p>Anyone who is a British citizen or a UK resident can start a petition on the official government website, <a href="https://petition.parliament.uk/">petition.parliament.uk</a>.</p>
-                <p>If the petition gets a minimum of 10,000 signatures, the government usually responds. If it gets 100,000 signatures, it may be debated in Parliament.</p>
-            </div>
+        <div>
+            <h1>What is this?</h1>
+            <p>This tool allows you to view UK petitions data by locality.</p>
+            <p>Anyone who is a British citizen or a UK resident can start a petition on the official government website, <a href="https://petition.parliament.uk/">petition.parliament.uk</a>.</p>
+            <p>If the petition gets a minimum of 10,000 signatures, the government usually responds. If it gets 100,000 signatures, it may be debated in Parliament.</p>
         </div>
 
-        <div class="collapsible-section">
-            <div class="collapsible-header">
-                <h1>Why did we make this?</h1>
-                <div class="collapse-icon"></div>
-            </div>
-            <div class="collapsible-content">
-                <p>Petitions are one way of getting a sense of what people in the country care about. Even though the government does expose all the petitions data on the page, it does it on a per-petition basis. It is difficult to know what petitions are popular in a particular area, or how petitions are related to each other. This tool tries to help with that.</p>
-            </div>
+        <div>
+            <h1>Why did we make this?</h1>
+            <p>Petitions are one way of getting a sense of what people in the country care about. Even though the government does expose all the petitions data on the page, it does it on a per-petition basis. It is difficult to know what petitions are popular in a particular area, or how petitions are related to each other. This tool tries to help with that.</p>
         </div>
 
-        <div class="collapsible-section">
-            <div class="collapsible-header">
-                <h1>What is salience?</h1>
-                <div class="collapse-icon"></div>
-            </div>
-            <div class="collapsible-content">
-                <p>The goal of the salience metric is to show whether a petition is more or less popular in a given constituency than is to be expected.</p>
-                <p>This should help make it clear whether an issue in a constituency is as popular as it is nationally, more popular than it is nationally, or less popular than it is nationally.</p>
-                <p>To do that, we use the following formula: </p>
-                <div class="formula-container">
+        <div>
+            <h1>What is salience?</h1>
+            <p>The goal of the salience metric is to show whether a petition is more or less popular in a given constituency than is to be expected.</p>
+            <p>This should help make it clear whether an issue in a constituency is as popular as it is nationally, more popular than it is nationally, or less popular than it is nationally.</p>
+            <p>To do that, we use the following formula: </p>
+            <div class="formula-container">
 
-                    <div class="formula">
-                        Salience = 
-                        <span class="fraction">
-                            <span class="fraction-top">
-                                <span class="variable">S<span class="subscript">c</span></span> / <span class="variable">S<span class="subscript">t</span></span>
-                            </span>
-                            <span class="fraction-bottom">
-                                <span class="variable">P<span class="subscript">c</span></span> / <span class="variable">P<span class="subscript">t</span></span>
-                            </span>
+                <div class="formula">
+                    Salience = 
+                    <span class="fraction">
+                        <span class="fraction-top">
+                            <span class="variable">S<span class="subscript">c</span></span> / <span class="variable">S<span class="subscript">t</span></span>
                         </span>
-                    </div>
+                        <span class="fraction-bottom">
+                            <span class="variable">P<span class="subscript">c</span></span> / <span class="variable">P<span class="subscript">t</span></span>
+                        </span>
+                    </span>
                 </div>
-
-                <div class="description">
-                    <strong>Where:</strong><br>
-                    S<sub>c</sub> = Signatures for the petition in a constituency<br>
-                    S<sub>t</sub> = Total signatures for that petition across all constituencies<br>
-                    P<sub>c</sub> = Population of that constituency<br>
-                    P<sub>t</sub> = Total population of all constituencies
-                </div>
-                <p>If this value is &gt;1, then the petition is more salient in the constituency than it is nationally. If it is &lt;1, the petition is less salient than it is nationally.</p>
             </div>
 
+            <div class="description">
+                <strong>Where:</strong><br>
+                S<sub>c</sub> = Signatures for the petition in a constituency<br>
+                S<sub>t</sub> = Total signatures for that petition across all constituencies<br>
+                P<sub>c</sub> = Population of that constituency<br>
+                P<sub>t</sub> = Total population of all constituencies
+            </div>
+            <p>If this value is &gt;1, then the petition is more salient in the constituency than it is nationally. If it is &lt;1, the petition is less salient than it is nationally.</p>
         </div>
 
-        <div class="collapsible-section">
-            <div class="collapsible-header">
-                <h1>Sources &amp; licences</h1>
-                <div class="collapse-icon"></div>
-            </div>
-            <div class="collapsible-content">
-                <h2>The petitions data</h2>
-                <p>The petitions data is all made available in JSON format on <a href="https://petition.parliament.uk/">petition.parliament.uk</a></p>
-                <p><strong>Contains public sector information licensed under the Open Government Licence v3.0.</strong></p>
-                <h2>The topics assigned to petitions</h2>
-                <p>We use the list of topics on the <a href="https://commonslibrary.parliament.uk/research/full-topic-list/">House of Commons library website</a>. We remove two topics: monthly economic indicators and economic indicators.</p>
-                <p><strong>Contains Parliamentary information licensed under the <a href="https://www.parliament.uk/site-information/copyright-parliament/open-parliament-licence/">Open Parliament Licence v3.0</a>.</strong></p>
-                <h2>The constituency boundaries</h2>
-                <p>The constiuency boundaries are the <a href="https://geoportal.statistics.gov.uk/datasets/ef63f363ac824b79ae9670744fcc4307_0/explore?location=55.068500%2C-3.316942%2C6.29">Westminster Parliamentary Constuencies (July 2024) Boundaries UK BUC</a>. </p>
-                <p><strong>Source: Office for National Statistics licensed under the Open Government Licence v.3.0. Contains OS data © Crown copyright and database right 2024.</strong></p>
-                <h2>The map</h2>
-                <p>The map data itself comes from <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>.</p>
-                <h2>The constituency populations data</h2>
-                <p>The populations are calculated using data from the <a href="https://commonslibrary.parliament.uk/constituency-statistics-population-by-age/">House of Commons library.</a></p>
-                <p><strong>Contains Parliamentary information licensed under the <a href="https://www.parliament.uk/site-information/copyright-parliament/open-parliament-licence/">Open Parliament Licence v3.0</a>.</strong></p>
-            </div>
-        </div>
+        <h1>Sources &amp; licences</h1>
+        <h2>The petitions data</h2>
+        <p>The petitions data is all made available in JSON format on <a href="https://petition.parliament.uk/">petition.parliament.uk</a></p>
+        <p><strong>Contains public sector information licensed under the Open Government Licence v3.0.</strong></p>
+        <h2>The topics assigned to petitions</h2>
+        <p>We use the list of topics on the <a href="https://commonslibrary.parliament.uk/research/full-topic-list/">House of Commons library website</a>. We remove two topics: monthly economic indicators and economic indicators.</p>
+        <p><strong>Contains Parliamentary information licensed under the <a href="https://www.parliament.uk/site-information/copyright-parliament/open-parliament-licence/">Open Parliament Licence v3.0</a>.</strong></p>
+        <h2>The constituency boundaries</h2>
+        <p>The constiuency boundaries are the <a href="https://geoportal.statistics.gov.uk/datasets/ef63f363ac824b79ae9670744fcc4307_0/explore?location=55.068500%2C-3.316942%2C6.29">Westminster Parliamentary Constuencies (July 2024) Boundaries UK BUC</a>. </p>
+        <p><strong>Source: Office for National Statistics licensed under the Open Government Licence v.3.0. Contains OS data © Crown copyright and database right 2024.</strong></p>
+        <h2>The map</h2>
+        <p>The map data itself comes from <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>.</p>
+        <h2>The constituency populations data</h2>
+        <p>The populations are calculated using data from the <a href="https://commonslibrary.parliament.uk/constituency-statistics-population-by-age/">House of Commons library.</a></p>
+        <p><strong>Contains Parliamentary information licensed under the <a href="https://www.parliament.uk/site-information/copyright-parliament/open-parliament-licence/">Open Parliament Licence v3.0</a>.</strong></p>
     </div>
 
     <footer>
