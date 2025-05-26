@@ -52,16 +52,3 @@ The population figures are calculated using the data from the [House of Commons 
 
 Contains Parliamentary information licensed under the [Open Parliament Licence v3.0.](https://www.parliament.uk/site-information/copyright-parliament/open-parliament-licence/)
 
-
-## Screenshots
-
-![image](https://github.com/user-attachments/assets/a3a05bcc-ad04-4170-9b8c-1b933c560a9e)
-Overview view 
-
-![image](https://github.com/user-attachments/assets/0845ab4b-e8d8-4dc7-8ba6-103b344ee10b)
-Detailed view 
-
-## What is "salience"?
-
-The measure for salience (which should definitely be updated if anyone knows a better one for this data!) works by calculating the ratio between (signatures in a constituency / all signatures) : (1/650). This assumes that each constituency has the same population. That way, if more than `1/650 * total signatures` people in your constituency have signed a petition, it is probably *more salient* in your local area than nationally. This is very much a WIP and rough measure.
-
