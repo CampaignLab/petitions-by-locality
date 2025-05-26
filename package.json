@@ -1,6 +1,6 @@
 {
   "name": "petitions-by-locality",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "An app for understanding UK petitions data by locality.",
   "main": "app.js",
   "type": "module",
