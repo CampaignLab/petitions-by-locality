@@ -191,55 +191,6 @@ footer {
     100% { transform: rotate(360deg); }
 }
 
-/* Collapsible Section Styling (Moved from index.html) */
-.collapsible-section {
-    margin-bottom: 1.5em;
-}
-.collapsible-header {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    margin-bottom: 0.5em;
-}
-.collapsible-header h1 {
-    margin-right: 0.5em;
-    margin-bottom: 0; /* Override default h1 margin */
-}
-.collapse-icon {
-    width: 1em;
-    height: 1em;
-    border: 0.1em solid #666;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 0.8em;
-    color: #666;
-    transition: transform 0.2s ease-in-out; /* Smooth transition for icon rotation */
-}
-.collapse-icon::before {
-    content: '+';
-}
-.collapsible-content {
-    /* Removed display: none; */
-    max-height: 0; /* Hidden by default using max-height */
-    overflow: hidden; /* Hides content that overflows max-height */
-    padding-left: 1em;
-    transition: max-height 0.3s ease-out, opacity 0.3s ease-out; /* Smooth transition for height and opacity */
-    opacity: 0; /* Start with content invisible */
-}
-.collapsible-header.open .collapse-icon::before {
-    content: '−';
-}
-.collapsible-header.open .collapse-icon {
-    transform: rotate(180deg); /* Rotate icon when open */
-}
-.collapsible-content.open {
-    /* max-height will be set dynamically by JS to scrollHeight */
-    opacity: 1; /* Make content visible */
-}
-
-
 /* Media Queries for Global Elements */
 @media (max-width: 900px) {
     .navbar {
@@ -267,4 +218,55 @@ footer {
         width: 80%; /* Take more width on smaller screens */
         height: 15vh; /* Adjust height for smaller screens */
     }
+}
+
+.formula-container {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border: 1px solid #f0f0f0;
+    max-width: 600px;
+    margin: 0 auto;
+}
+.formula {
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.fraction {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    margin: 0 8px;
+    position: relative;
+}
+
+.fraction-top,
+.fraction-bottom {
+    display: block;
+    padding: 8px 12px;
+    font-size: 16px;
+    line-height: 1.2;
+}
+
+.fraction-top {
+    border-bottom: 2px solid #333;
+    margin-bottom: 2px;
+}
+
+.fraction-bottom {
+    margin-top: 2px;
+}
+
+.variable {
+    font-style: italic;
+    font-weight: 500;
+}
+
+.subscript {
+    font-size: 0.8em;
+    vertical-align: sub;
 }

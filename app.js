@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import fs from 'fs';
+import csv from 'csv-parser';
 import { fileURLToPath } from 'url';
 
 
@@ -35,6 +36,23 @@ app.get('/', (req, res) => {
 
 app.get('/constituenciesData', (req, res) => {
     res.sendFile(path.join(__dirname, 'data', 'constituencies_data.json'));
+});
+
+app.get('/constituencyPopulations', (req, res) => {
+    let populations = {};
+    fs.createReadStream(path.join(__dirname, 'constant_data', 'constituency_populations.csv'))
+        .pipe(csv())
+        .on('data', data => {
+            // console.log(data)
+            const constituency = data[Object.keys(data)[0]]; // WHY DOES THIS WORK?
+            const pop = data[Object.keys(data)[1]];
+            populations[constituency] = pop;
+        })
+        .on('end', () => {
+            // add a total population 
+            res.send(populations);
+        });
+
 });
 
 app.get('/topicsData', (req, res) => {
