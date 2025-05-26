@@ -37,10 +37,6 @@ The structure of the app itself is:
     - localities.css - styles for localities view 
     - topics.css - styles for topics view 
 
-
-
-
-
 ## Acknowledgements / licences for data used
 
 

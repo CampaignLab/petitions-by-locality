@@ -243,122 +243,243 @@ function populatePetitionsTable(targetElementId, petitions) {
   container.appendChild(scrollContainer); // Append scroll container to the target element
 }
 
+
+
 /**
  * Creates a map visualisation of petitions by constituency.
- * @param {string} visualisationMode The mode of visualisation ('signatures', 'salience', or 'weightedSignatures'). 
- * @param {Array<Object>} relevantPetitions An array of petition objects to visualise - should already have been filtered. 
- * */
+ * 
+ * @param {string} visualisationMode  The mode of visualisation.
+ * Visualisation modes:
+ * - signatures: Visualisation will be a chloropleth map of the total number of signatures for every petition in that topic in that constituency.
+ * - salience: Visualisation will be a chloropleth map of the average salience of every topic in that constituency.
+ * - weightedSignatures: Visualisation will be the sum of the weighted (salience × signatures) signatures of every topic in that constituency.
+ * @param {Array<Object>} relevantPetitions An array of petition objects to visualise - should already have been filtered.
+ */
 function createMap(visualisationMode = 'signatures', relevantPetitions = []) {
-var map = L.map('mapDiv').setView([55.78, -5.96], 5);
-    
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
 
-    window.dispatchEvent(new Event('resize')); // Trigger a resize event to ensure the map is drawn correctly
+  const colourScale = [
+    '#fff7ec', // very pale white-ish
+    '#fdd49e', // jump to a warmer mid-light
+    '#fdbb84',
+    '#fc8d59',
+    '#ef6548',
+    '#d7301f',
+    '#b30000',
+    '#7f0000'
+  ];
 
-    // this is hacky - fire a resize event to amke the map draw! 
-    window.dispatchEvent(new Event('resize'));
+  // Set metric text for tooltip
+  const metricText = {
+    signatures: 'Signatures',
+    salience: 'Average salience',
+    weightedSignatures: 'Total signatures weighted by salience',
+  }[visualisationMode] || '';
 
-   
-    // This map shows, in each constituency, the number of signatures (not number of petitions - make this clear). 
-    
-    let signaturesInThisTopicByConstituency = {}; 
-    let empties = [];
-    for (const petition of relevantPetitions) {
-      const signaturesInThisPetition = petition.attributes.signatures_by_constituency;
-      if (signaturesInThisPetition == undefined) {
-        // whoops, move on - I think some petitions don't have signatures by constituency 
-        empties.push(petition.id);
-      }
-      else {
-        for (const constituencyObj of signaturesInThisPetition) {
-            const constituencyName = constituencyObj.name;
-            const signatures = constituencyObj.signature_count;
 
-            if (signaturesInThisTopicByConstituency.hasOwnProperty(constituencyName)) { 
-                if (typeof(signatures) !== 'number') {
-                    console.warn(`Non-numeric signature count for constituency ${constituencyName} in petition ${petition.id}:`, signatures);
-                    console.log(constituencyObj)
-                }
-                signaturesInThisTopicByConstituency[constituencyName] += signatures;
-            } else {
-                signaturesInThisTopicByConstituency[constituencyName] = signatures;
+  let map = L.map('mapDiv').setView([55.78, -5.96], 5);
+
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  }).addTo(map);
+
+  window.dispatchEvent(new Event('resize')); // Trigger a resize event to ensure the map is drawn correctly
+
+  // this is hacky - fire a resize event to amke the map draw! 
+  window.dispatchEvent(new Event('resize'));
+
+
+  // This map shows, in each constituency, the number of signatures (not number of petitions - make this clear). 
+
+  let signaturesInThisTopicByConstituency = {};
+  let saliencesInThisTopicByConstituency = {};
+
+  let empties = [];
+  for (const petition of relevantPetitions) {
+    const signaturesInThisPetition = petition.attributes.signatures_by_constituency;
+    if (signaturesInThisPetition == undefined) {
+      // whoops, move on - I think some petitions don't have signatures by constituency 
+      empties.push(petition.id);
+    }
+    else {
+      for (const constituencyObj of signaturesInThisPetition) {
+        const constituencyName = constituencyObj.name;
+        let signatures = constituencyObj.signature_count;
+
+        // Apply the correct weighting mode here 
+
+        if (visualisationMode === 'signatures') {
+          if (signaturesInThisTopicByConstituency.hasOwnProperty(constituencyName)) {
+            if (typeof (signatures) !== 'number') {
+              console.warn(`Non-numeric signature count for constituency ${constituencyName} in petition ${petition.id}:`, signatures);
+              console.log(constituencyObj)
             }
+            signaturesInThisTopicByConstituency[constituencyName] += signatures;
+          } else {
+            signaturesInThisTopicByConstituency[constituencyName] = signatures;
+          }
+        } else {
+          const salience =
+            (
+              signatures / petition.attributes.signature_count
+            ) / (
+              window.constituencyPopulations[constituencyName] / window.constituencyPopulations['Grand Total']
+            );
+          if (visualisationMode === 'salience') {
+
+            // save to saleinces 
+            if (saliencesInThisTopicByConstituency.hasOwnProperty(constituencyName)) {
+              saliencesInThisTopicByConstituency[constituencyName].push(salience);
+            } else {
+              saliencesInThisTopicByConstituency[constituencyName] = [salience];
+            }
+          } else if (visualisationMode === 'weightedSignatures') {
+            // weight signatures in this constituencty by salience, then add as normal 
+            signatures = signatures * salience;
+            if (signaturesInThisTopicByConstituency.hasOwnProperty(constituencyName)) {
+              signaturesInThisTopicByConstituency[constituencyName] += signatures;
+            } else {
+              signaturesInThisTopicByConstituency[constituencyName] = signatures;
+            }
+          }
         }
       }
     }
+  }
 
-    // console.log(signaturesInThisTopicByConstituency);
-    
-     // work out the colours by getting the range of signature values and mapping each range to a colour 
-    
-    
-    const colourScale = ['#fff7ec','#fee8c8','#fdd49e','#fdbb84','#fc8d59','#ef6548','#d7301f','#b30000','#7f0000'];
+  // console.log(signaturesInThisTopicByConstituency);
 
-    const maxSignatures = Math.max(...Object.values(signaturesInThisTopicByConstituency));
-    const minSignatures = Math.min(...Object.values(signaturesInThisTopicByConstituency));
-    const stepSize = (maxSignatures - minSignatures) / colourScale.length;
+  // work out the colours by getting the range of signature values and mapping each range to a colour 
 
-    const constituencyColours = {};
+  let datasetToUse = {};
 
-    for (const [constituency, count] of Object.entries(signaturesInThisTopicByConstituency)) {
-    // Calculate the index in the colour scale
-    let index = Math.floor((count - minSignatures) / stepSize);
-    
-    // Ensure index stays within bounds of the colourScale array
-    if (index >= colourScale.length) index = colourScale.length - 1;
-    
-    constituencyColours[constituency] = colourScale[index];
-    
-    }
-    
-
-
-    const styleFunc = feature => {
-        return {
-            fillColor: constituencyColours[feature.properties.PCON24NM] || '#fff7ec', // Default color if not found
-            weight: 2,
-            opacity: 1,
-            color: 'white',
-            fillOpacity: 0.8
-        }
-    }
-
-    let geojsonLayer = L.geoJSON(window.constituencyBoundariesGeoJSON, {
-        style: styleFunc,
-        onEachFeature: function (feature, layer) {
-            const constituencyName = feature.properties.PCON24NM;
-            const signatureCount = signaturesInThisTopicByConstituency[constituencyName] || 0;
-            
-            // Add hover effect
-            layer.on('mouseover', function () {
-                this.setStyle({
-                    weight: 4,
-                    color: '#666',
-                    fillOpacity: 0.9
-                });
-            });
-            
-            layer.on('mouseout', function () {
-                geojsonLayer.resetStyle(this);
-            });
-            
-            // Add click popup
-            layer.on('click', function () { 
-                const popupContent = `<strong>${constituencyName}</strong><br>Signatures: ${signatureCount.toLocaleString()}<br><a onclick="switchToConstituency('${constituencyName}')" href="javascript:;">All petitions in ${constituencyName}</a>`;
-                layer.bindPopup(popupContent).openPopup();
-            });
-        }
+  if (visualisationMode === 'signatures' || visualisationMode === 'weightedSignatures') {
+    datasetToUse = signaturesInThisTopicByConstituency;
+  } else if (visualisationMode === 'salience') {
+    // more work needed  
+    Object.keys(saliencesInThisTopicByConstituency).forEach(constituency => {
+      const average = saliencesInThisTopicByConstituency[constituency].reduce((a, b) => a + b, 0) / saliencesInThisTopicByConstituency[constituency].length;
+      datasetToUse[constituency] = average;
     });
 
-    geojsonLayer.addTo(map); 
+
+  }
+
+
+  const hexToRgb = (hex) => {
+    if (!hex || typeof hex !== 'string' || !hex.startsWith('#') || hex.length !== 7) {
+      console.warn("Invalid hex input:", hex);
+      return { r: 200, g: 200, b: 200 }; // fallback
+    }
+    const bigint = parseInt(hex.slice(1), 16);
+    return {
+      r: (bigint >> 16) & 255,
+      g: (bigint >> 8) & 255,
+      b: bigint & 255,
+    };
+  };
+
+  const rgbToHex = (r, g, b) => {
+    const toHex = (n) => n.toString(16).padStart(2, '0');
+    return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+  };
+
+  const interpolateColor = (color1, color2, t) => {
+    const c1 = hexToRgb(color1);
+    const c2 = hexToRgb(color2);
+    const r = Math.round(c1.r + (c2.r - c1.r) * t);
+    const g = Math.round(c1.g + (c2.g - c1.g) * t);
+    const b = Math.round(c1.b + (c2.b - c1.b) * t);
+    return rgbToHex(r, g, b);
+  };
+
+  const getColorFromScale = (value, minVal, maxVal, scale) => {
+    if (!Array.isArray(scale) || scale.length < 2) return "#cccccc";
+    if (maxVal === minVal) return scale[0];
+
+    const t = (value - minVal) / (maxVal - minVal);
+    const n = scale.length - 1;
+    const scaledT = t * n;
+
+    const index = Math.floor(scaledT);
+    const frac = scaledT - index;
+
+    const i1 = Math.min(index, n - 1);
+    const i2 = i1 + 1;
+
+    const color1 = scale[i1];
+    const color2 = scale[i2];
+
+    return interpolateColor(color1, color2, frac);
+  };
+
+  const values = Object.values(datasetToUse).map(v => {
+    const n = Number(v);
+    return Number.isNaN(n) ? 0 : n;
+  });
+
+  console.log(values)
+  const maxVal = Math.max(...values);
+  const minVal = Math.min(...values);
+
+  console.log("thelog")
+
+  console.log(values, maxVal, minVal);
+
+  const constituencyColours = Object.fromEntries(
+    Object.entries(datasetToUse).map(([constituency, count]) => {
+      const numericCount = Number(count);
+      const color = getColorFromScale(numericCount, minVal, maxVal, colourScale);
+      return [constituency, color];
+    })
+  );
+
+
+
+  const styleFunc = feature => {
+    return {
+      fillColor: constituencyColours[feature.properties.PCON24NM] || '#fff7ec', // Default color if not found
+      weight: 2,
+      opacity: 1,
+      color: 'white',
+      fillOpacity: 0.8
+    }
+  }
+
+  let geojsonLayer = L.geoJSON(window.constituencyBoundariesGeoJSON, {
+    style: styleFunc,
+    onEachFeature: function (feature, layer) {
+      const constituencyName = feature.properties.PCON24NM;
+      const count = datasetToUse[constituencyName] || 0;
+
+      // Add hover effect
+      layer.on('mouseover', function () {
+        this.setStyle({
+          weight: 4,
+          color: '#666',
+          fillOpacity: 0.9
+        });
+      });
+
+      layer.on('mouseout', function () {
+        geojsonLayer.resetStyle(this);
+      });
+
+      // Add click popup
+      layer.on('click', function () {
+        const popupContent = `<strong>${constituencyName}</strong><br>${metricText}: ${count.toLocaleString()}<br><a onclick="switchToConstituency('${constituencyName}')" href="javascript:;">All petitions in ${constituencyName}</a>`;
+        layer.bindPopup(popupContent).openPopup();
+      });
+    }
+  });
+
+  geojsonLayer.addTo(map);
 
 }
-
 /**
  * Updates the detailed analysis section with a title and populates the petitions table.
+ * Also creates an interactive map visualization with controls to switch between different
+ * visualization modes (signatures, salience, weighted signatures).
  * @param {string} titleText The text for the title of the detailed analysis section.
  * @param {string} type 'group' or 'topic' to indicate what was clicked.
  * @param {string} name The actual group name or topic name to use for filtering.
@@ -372,7 +493,7 @@ function updateTopicDetailsSection(titleText, type, name) {
 
   if (topicDetailsSection && topicDetailsTitle && topicDetailsLeftTop && topicDetailsLeftBottom && topicDetailsRight) {
     topicDetailsTitle.textContent = `Petitions about ${titleText}`;
-    
+
     // Filter petitions based on type and name
     const rawPetitionsData = window.rawPetitionsData;
     const topicsData = allProcessedTopicData.topicsData; // Get the raw topics data for lookup
@@ -403,7 +524,7 @@ function updateTopicDetailsSection(titleText, type, name) {
       return sum + (petition.attributes?.signature_count || 0);
     }, 0);
 
-     // --- MODIFICATION START: Add map visualization controls ---
+    // --- MODIFICATION START: Add map visualization controls ---
     const mapVizControlsHTML = `
       <div id="mapVizControlsContainer" class="map-viz-controls">
         <strong>Visualise map by:</strong>
@@ -421,6 +542,7 @@ function updateTopicDetailsSection(titleText, type, name) {
       </div>
     `;
     // --- MODIFICATION END ---
+
     // Populate the top-left overview section
     topicDetailsLeftTop.innerHTML = `
       <h3>Overview for ${titleText}</h3>
@@ -432,18 +554,35 @@ function updateTopicDetailsSection(titleText, type, name) {
     `;
 
     topicDetailsLeftBottom.innerHTML = `<h3>Where have petitions about ${titleText} been signed?</h3>
-    <div id="mapDiv"></div>`; 
-    
-    // Create the map 
+    <div id="mapDiv"></div>`;
 
-    createMap('signatures', relevantPetitions);
+    // Create the map with initial visualization mode
+    let visualisationMode = document.querySelector('input[name="mapVizType"]:checked').value || 'signatures';
+    createMap(visualisationMode, relevantPetitions);
 
-    
+    // Add event listeners to radio buttons to redraw map when selection changes
+    const mapVizRadios = document.querySelectorAll('input[name="mapVizType"]');
+    mapVizRadios.forEach(radio => {
+      radio.addEventListener('change', function () {
+        if (this.checked) {
+          // Destroy existing map container and recreate it to avoid "map container already initialized" error
+          const mapDiv = document.getElementById('mapDiv');
+          if (mapDiv) {
+            mapDiv.innerHTML = ''; // Clear the container
+            // Recreate the map div element
+            const newMapDiv = document.createElement('div');
+            newMapDiv.id = 'mapDiv';
+            mapDiv.parentNode.replaceChild(newMapDiv, mapDiv);
+          }
+          createMap(this.value, relevantPetitions);
+        }
+      });
+    });
+
     populatePetitionsTable('topicDetailsRight', relevantPetitions);
     topicDetailsSection.style.display = 'block'; // Make the section visible
   }
 }
-
 
 /**
  * Creates or updates the grouped bar chart.
@@ -540,7 +679,7 @@ function createGroupedChart(chartId, data, groups, chartType) {
           },
           padding: 10,
           callbacks: {
-            label: function(context) {
+            label: function (context) {
               const label = context.dataset.label || '';
               const value = context.parsed.y;
               const rawCount = groupedData[context.label].rawCount;
@@ -667,7 +806,7 @@ function createIndividualChart(chartId, data, chartType, highlightedTopics = [])
           },
           padding: 10,
           callbacks: {
-            label: function(context) {
+            label: function (context) {
               const label = context.dataset.label || '';
               const value = context.parsed.x;
               const rawCount = data[context.label].rawCount;
@@ -776,9 +915,9 @@ async function initializeTopicView() {
 }
 
 function switchToConstituency(constituencyName) {
-    showView('localityView'); // Switch to the locality view
-    document.getElementById('constituencySelect').value = constituencyName;
-    document.getElementById('constituencySelect').dispatchEvent(new Event('change')); // Trigger change event to load constituency data
+  showView('localityView'); // Switch to the locality view
+  document.getElementById('constituencySelect').value = constituencyName;
+  document.getElementById('constituencySelect').dispatchEvent(new Event('change')); // Trigger change event to load constituency data
 }
 
 // Ensure Chart.js is loaded before attempting to create charts
