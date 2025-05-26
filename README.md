@@ -15,7 +15,7 @@ This is a WIP project.
 5.  Run `$npm start` and navigate to `localhost:3000`. 
 
 ## TODOs:
-- Weight constituencies by population, not 1/650 (population might be population or registered voters)
+- Weight constituencies by population, not 1/650 (population might be population or registered voters) DONE
 - Implelement proper topics caching non-manually 
 - Move on to AWS? 
 - Do things with the topics data 
