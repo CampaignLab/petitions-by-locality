@@ -4,16 +4,7 @@ This is a WIP project.
 
 ## How to install me
 
-(See slightly more detailed instructions in INSTALL.md.)
-
-1. Download (ie `$ git clone`). 
-2. Install dependencies (`$ npm i`)
-3. For the AI bits, create a `.env` file: 
-    - GEMINI_API_KEY - your API key 
-    - GEMINI_MODEL_CODE - the code for the model you want to use 
-    - GEMINI_RATE_LIMIT - a rate limit you want to use. This is per minute. 
-4. Run `$ npm fetch-data` in the root of the repo to fetch the data and associate petitions with topics. 
-5. Run `$ npm start` and navigate to `localhost:3000`. 
+See INSTALL.md.
 
 If you want to build the docs using jsdoc, run `$ npm run build-docs.`
 
