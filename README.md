@@ -4,16 +4,7 @@ This is a WIP project.
 
 ## How to install me
 
-(See slightly more detailed instructions in INSTALL.md.)
-
-1. Download (ie `$ git clone`). 
-2. Install dependencies (`$ npm i`)
-3. For the AI bits, create a `.env` file: 
-    - GEMINI_API_KEY - your API key 
-    - GEMINI_MODEL_CODE - the code for the model you want to use 
-    - GEMINI_RATE_LIMIT - a rate limit you want to use. This is per minute. 
-4. Run `$ npm fetch-data` in the root of the repo to fetch the data and associate petitions with topics. 
-5. Run `$ npm start` and navigate to `localhost:3000`. 
+See INSTALL.md.
 
 If you want to build the docs using jsdoc, run `$ npm run build-docs.`
 
@@ -47,9 +38,14 @@ Contains public sector information licensed under the Open Government Licence v3
 
 ### List of topics assigned to petitions 
 
-The list is manually pulled from [the topics page of the House of Commons Library](https://commonslibrary.parliament.uk/research/full-topic-list/). Two topics are removed: monthly economic indicators and economic indicators. 
+We use the list of most important issues on pages 15-26 of the [British Election Study 2014-2024 Combined Waves 1-29 Internet Panel Cookbook](https://www.britishelectionstudy.com/wp-content/uploads/2024/09/Bes_wave29Documentationv29.0.pdf). 
 
-Contains Parliamentary information licensed under the [Open Parliament Licence v3.0](https://www.parliament.uk/site-information/copyright-parliament/open-parliament-licence/). 
+Accessed 29/05/2025.
+
+Citation: Fieldhouse, E., J. Green, G. Evans, J. Mellon, C. Prosser, J. Bailey, R. de Geus, H. Schmitt, C. van der Eijk, J. Griffiths, & S. Perrett. (2024) British Election Study Internet Panel Waves 1-29. DOI: 10.5255/UKDA-SN-8202-2
+Scientific Leadership Team: Professor Ed Fieldhouse, Professor Geoff Evans, Dr Jonathan Mellon, Dr Christopher Prosser. Supported by Dr Jack Bailey, Dr James Griffiths, Dr Stuart Perrett. 
+
+Topics are assigned using an LLM, which we prompt with a  slightly modified version of pages 15-24 of that document. 
 
 ### Constituency boundaries 
 

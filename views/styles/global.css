@@ -227,7 +227,7 @@ footer {
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     border: 1px solid #f0f0f0;
     max-width: 600px;
-    margin: 0 auto;
+    margin: 2rem auto; /* Added top margin for spacing */
 }
 .formula {
     font-size: 20px;
@@ -269,4 +269,26 @@ footer {
 .subscript {
     font-size: 0.8em;
     vertical-align: sub;
+}
+
+/* Styling for cite */
+cite {
+    display: block; /* Make it a block-level element for better spacing */
+    font-size: 0.9rem;
+    color: #777;
+    font-style: italic;
+    margin-top: 1rem; /* Add some space above the citation */
+    padding-left: 1.5rem; /* Indent the citation slightly */
+    border-left: 3px solid #ddd; /* Add a subtle left border */
+}
+
+cite a {
+    color: #6366f1; /* Use primary color for links within the cite */
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+
+cite a:hover {
+    text-decoration: underline;
+    color: #4f46e5;
 }

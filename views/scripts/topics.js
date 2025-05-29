@@ -2,6 +2,7 @@
 let groupedChartInstance = null;
 let individualChartInstance = null;
 let allProcessedTopicData = null; // To store both petition and signature percentages, and raw topicsData
+let topicGroups = null;
 let currentChartType = 'petitionPercentages'; // Default to petition percentages
 let currentIndividualChartFilter = null; // Stores the name of the currently filtered group for the individual chart
 
@@ -27,7 +28,7 @@ const chartColors = {
  */
 async function fetchTopicsData() {
   try {
-    const response = await fetch('http://localhost:3000/topicsData');
+    const response = await fetch(`${API_STEM_URL}/topicsData`);
     if (!response.ok) {
       console.error('Failed to fetch topics data:', response.status);
       return null;
@@ -35,6 +36,24 @@ async function fetchTopicsData() {
     return await response.json();
   } catch (error) {
     console.error('Error fetching topics data:', error);
+    return null;
+  }
+}
+
+/**
+ * Get the topics hierarhcy from the backend API.
+ * @returns 
+ */
+async function fetchTopicsHierarchy() {
+  try {
+    const response = await fetch(`${API_STEM_URL}/topicsHierarchy`);
+    if (!response.ok) {
+      console.error('Failed to fetch topics hierarchy:', response.status);
+      return null;
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching topics hierarchy:', error);
     return null;
   }
 }
@@ -153,17 +172,18 @@ async function loadAndProcessTopicData() {
   };
 }
 
-// Topic Groups
-const topicGroups = {
-  'Brexit and the EU': ['brexit', 'the eu'],
-  'Coronavirus': ['coronavirus'],
-  'Economy, business and transport': ['business', 'economy', 'transport', 'work and incomes'],
-  'Home affairs': ['communities', 'crime', 'culture', 'culture, media and sport', 'family and civil law', 'immigration', 'justice', 'security'],
-  'Parliament and elections': ['devolution', 'elections', 'government', 'local government', 'parliament'],
-  'Science, climate and technology': ['climate change', 'energy', 'environment', 'sciences', 'technology'],
-  'Social policy': ['education', 'families and social services', 'health', 'housing and planning', 'welfare and pensions'],
-  'Other': ['africa', 'americas', 'asia', 'europe', 'middle east', 'defence', 'institutions', 'other']
-};
+// Get the topic groups
+
+// const topicGroups = {
+//   'Brexit and the EU': ['brexit', 'the eu'],
+//   'Coronavirus': ['coronavirus'],
+//   'Economy, business and transport': ['business', 'economy', 'transport', 'work and incomes'],
+//   'Home affairs': ['communities', 'crime', 'culture', 'culture, media and sport', 'family and civil law', 'immigration', 'justice', 'security'],
+//   'Parliament and elections': ['devolution', 'elections', 'government', 'local government', 'parliament'],
+//   'Science, climate and technology': ['climate change', 'energy', 'environment', 'sciences', 'technology'],
+//   'Social policy': ['education', 'families and social services', 'health', 'housing and planning', 'welfare and pensions'],
+//   'Other': ['africa', 'americas', 'asia', 'europe', 'middle east', 'defence', 'institutions', 'other']
+// };
 
 // Function to group the topic data
 function groupTopicData(data, groups) {
@@ -885,9 +905,14 @@ function resetIndividualChart() {
  */
 async function initializeTopicView() {
   // Only load data once
+  if (!topicGroups) {
+    topicGroups = await fetchTopicsHierarchy();
+  }
   if (!allProcessedTopicData) {
     allProcessedTopicData = await loadAndProcessTopicData();
   }
+
+  // load topic groups 
 
   if (allProcessedTopicData) {
     // Initial rendering: Grouped chart (vertical bars) and Individual chart (horizontal bars)

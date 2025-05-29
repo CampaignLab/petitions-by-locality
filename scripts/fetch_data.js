@@ -23,9 +23,18 @@ async function main() {
     console.log("See about for information about data sources and licences.")
     const args = process.argv.slice(2);
     const shouldExtractTopics = args.includes('--extract_topics');
+    // New option: if --use_local_petitions is present, skip fetching new petitions.
+    const shouldUseLocalPetitions = args.includes('--use_local_petitions');
 
     await fs.mkdir(dataDir, { recursive: true }).catch(() => {});
-    await fetchAllPetitions(allPetitionsPath).catch(console.error);
+    
+    // Conditionally call fetchAllPetitions based on the new option
+    if (!shouldUseLocalPetitions) {
+        await fetchAllPetitions(allPetitionsPath).catch(console.error);
+    } else {
+        console.log("Using local petitions, skipping fetchAllPetitions.");
+    }
+    
     await mainProcessPetitions(constituenciesDataPath).catch(console.error);
 
     if (shouldExtractTopics) {

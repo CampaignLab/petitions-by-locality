@@ -1,0 +1,153 @@
+Your job is to categorise petitions by topic. The list of topics is below: there are 50 topics. Read the whole list, and then assign the petition a category. This is in the context of the UK - do not use issues from other places, like the US. Do not include the number (eg if a petition is in topic 1. Health, just say "Health"). Only say the exact name of the topic (eg "Health", "Partisan-neg"....). Do not make up topics. 
+
+1. Health
+Generally, these responses referred to the health service itself, whether directly or referencing threats to it: "NHS", "Health Service", "NHS crisis", "NHS underfunding", "Privatisation of NHS", "Junior doctors". Also included were responses such as "nhs freeloaders". Note that this code excludes Covid-19 specific responses, which have their own code from wave 20 onwards.
+
+2. Education
+Apart from just the single word "education", this also includes related responses such as "poor standards of education", "underfunding in education", "skill shortages", "university tuition fee", "state of schools", "Teacher's salaries".
+
+3. Election outcome
+This code was used when the respondent is referring to the result of a recent or upcoming election but in a way that is relatively neutral (or insufficiently negative to be coded as either pol-neg or partisan-neg), or positive about a particular outcome. This includes references to internal party elections (eg those to select Theresa May's successor). Examples include: "election", "The up coming General Election", "hung parliament", "23-Jun-2016", "Ensuring the Conservative party are successful", "the next prime minister", "The possible election of Jeremy Corbyn", "Choosing the right Government!".
+
+4. Pol-neg
+Responses were coded pol-neg whenever the respondent was negative about the current states of politics or politicians in general. Examples include: "Lying politicians", "corruption", "The unelected Government", "untrustworthy MPs", "political chaos", "no strong leadership", "Lack of democracy", "Honesty", "Lack of compassion", "Indecision", "Dysfunctional political system". Complaints about media bias, regardless of the alleged direction of the bias, were coded pol-neg. Examples include: "biased media", "The media i.e. BBC and tabloids" "misinformation" and "Mainstream Media bias". However, accusations of media bias or control that explicitly reference antisemitic conspiracy theories were instead coded with other conspiracy theories as 8 – Nat ident, goals-loss.
+
+5. Partisan-neg
+Conversely, the partisan-neg code is used when individuals are negative about a specific political party or politician. Sometimes this is just the name of the party or individual (which in the context of the most important issue facing the country implies a negative interpretation), but these are also often accompanied by clearly negative statements. For example: "getting the tories OUT", "Keeping Jeremy Corbyn out of Downing Street!!", "Disposing of the Clown – Boris Johnson", "DUP being involved in forming a government", "useless Labur party". Partisan-neg is only used when a specific party or politician is explicitly named. Responses that insinuate a particular politician or party, but do not name them, are coded as pol-neg. Examples of this include: "Changing prime minister for someone truthful", "Corrupt government/prime minister" and "Corrupt dishonest government led by a habitual liar who is unfit to be PM" which are all coded as 4 – Pol-neg.
+
+6. Societal divides
+This code is used when respondents refer to division or a lack of cohesion in British society, but without making reference to either economic or cultural divides specifically. This includes references to regional division, eg "Widening gap between London and the rest of the country". Examples of responses coded this way include: "unity", "social cohesion", "Acceptance of each other's differences", "the break down of society", "healing a very divided country", "Division and lack of understanding".
+
+7. Morals
+Responses coded under morals tend to either refer to morals directly, or to issues generally considered under this grouping, e.g. "Declining moral standards", "ethics", "Lack of moral compass". It also includes responses referring specifically to the need for religious or spiritual guidance, eg "Disregard of God", "Turning away from Christian faith and values". This code is also used for non-criminal and non-religious moral behaviour that the respondent views as having a corrupting effect on society, for example "a general selfishness and concentration on money", "endemic self interest", "greed", "Lack of compassion and love", "selfishness".
+
+8. Nat ident, goals-loss
+This code is used where an individual is expressing concern about cultural change, sometimes to an extreme and prejudiced degree, but without direct reference to immigration. For example, some individuals just put "Islam", while others contextualised this: "Muslims wanting England to change to Islam.Must never happen!!!!". There was also sometimes a sense of nostalgia and loss: "Britain losing its identity". This code includes responses directly expressing opposition to Black Lives Matter: "BLM - it should be ALL INNOCENT LIVES MATTER, do not destroy British history", "BLM scum running riot", "BLM riots". However, responses that might be referencing Black Lives Matter in Wave 20 (which took place in June 2020), but do not name it specifically, are coded as 41 – Pol values – auth (e.g. "Civil unrest and anarchic protests", "Demonstrations, thuggery & vandalism", "rioting and violence"). The 'nat ident, goals-loss' code also includes responses stating their opposition to alleged conspiracies, such as "a global agenda to force us into a one world government", "stopping the new world order" or "The Elite (Klaus Schwab from the World Economic Forum)". However, conspiracy theories explicitly about Covid-19 are coded as 48 – Coronavirus.
+
+9. Racism/discrimination
+In general, this code is used where individuals identify racism or discrimination directly as the most important issue facing the country. This includes discrimination against other marginalised groups, such as those with disabilities or immigrants. Examples include: "Intolerance", "Xenophobia", "Bigotry and misinformation", "Rising racism", "The mistreatment of the windrush generation", "Abuse of disabled people's human rights". This code also includes responses expressing support for Black Lives Matter or those for whom support/opposition is ambiguous. For example: "Black Lives Matter", "Racism and Black Lives Matter movement" and "Right wing and authoritarian responses to the BLM protests".
+
+10. Welfare
+This code is used when respondents mention either the welfare system or benefits generally, including responses such as "benefits", "Welfare state", "ATOS" etc. Note that as with most of the other codes, this can be either broadly positive or negative about the welfare state, and so includes responses such as "The attack on benefits" or "Persecuting those who rely on the welfare state", but also "scroungers" and "Benefits dependency".
+
+11. Terrorism
+Responses were coded this way if they mentioned terrorism directly (even if this was qualified eg "Possible terrorism" or "Islamic terrorism"), "extremism", the name of a terrorist group such as "ISIS" or a specific terrorist act, eg "Manchester bombing" or "Murder of female MP".
+
+12. Immigration
+If a respondent mentioned immigration or related issues then this code was used – except if they specifically referenced asylum or refugees, which is coded separately below. This includes responses simply saying "immigration" or "to many migrants", as well as qualifiers or related terms such as "Illegal immigration", "Uncontrolled immigration", "the cost of immigration", "ECONOMIC MIGRATION" and "control of our borders". It also includes responses that emphasise overpopulation, except where these make explicit reference to environmental concerns (which are coded as 40 – Environment), or to global overpopulation, which is coded as 45 – Other.
+
+13. Asylum
+This code was used when respondents specifically referenced asylum or refugees, whether using solely these particular words or in the context of a longer response, eg: "too many asylum seekers/immigrants coming into our country". In some cases this included those in support of refugees, eg "Fair deal for asylum seekers", "uk should be taking in more refugees".
+
+14. Crime
+When the respondent mentioned either "crime", "Anti-social behaviour" or specific crimes it was coded this way, eg "Killings", "Knife crime", "Fraud", "Gangs". In addition, references to "law", "law and order", "legal system" and "policing" were put under this code. Additionally, responses referencing "drugs" generally or specific drugs, eg "Cannabis use" were also coded this way.
+
+15. Europe
+Responses referencing Brexit, the EU and the EU referendum were put under this code, including those which referenced the consequences of Brexit, eg: "Industries leaving UK due to brexit". Where responses were primarily negative about politicians (even if this was in relation to Brexit), this was coded as 4 – Pol-neg.
+
+16. Constitutional
+This code was used for constitutional topics (excluding devolution and Scottish independence, which are coded separately), such as mentions of "constitution" or "constitutional change", calls for changes to the electoral system, abolition of the monarchy, Welsh independence, or around the West Lothian question, eg "English voting by English MP's". It also includes responses regarding Northern Ireland's future as part of the United Kingdom, and issues related to Northern Ireland's governance, such as the Good Friday Agreement. This code also includes complaints about the current electoral system, e.g. "Fair Voting system".
+
+17. International trade
+Responses focusing on trade or related terms were coded under this category, for example "Balance of Trade", "TRADE DEFICIT", "TTIP", "Cheap Beef Imports". This included references to post-Brexit trade deals, eg "Leaving the EU with trading arrangements in place", "Probable Trade agreement with US to import chlorinated chicken". This code is also used for answers where the respondent wants the UK to be less reliant on international trade and increase self-sufficiency, or concerns about which countries will supply the UK with essential goods and commodities, eg "Where to get energy. Definitely not Russia", "Country is reliant on too many other countries for energy and investment" or "UK trade deficit, and separately lack of UK self sufficiency (fuel, etc.), leaking money out of the country and diminishing UK wealth and power."
+
+18. Devolution
+This code was used where an individual specifically referenced devolution, either on its own or in reference to a specific constituent nation of the UK, eg "Devolution of power across the UK", "Devo Max".
+
+19. Scot-ind
+Conversely this code was used when an individual made specific reference to Scottish independence or related subjects, eg: "Scottish independence vote", "Preservation of the Union", "The fight for independence", "the 'yes' vote".
+
+20. Constitution
+This code is collapsed into code 16, and so is not present in the final data.
+
+21. Foreign affairs
+This is a residual code, which captures any responses relating to foreign affairs that are not specifically about war or defence, nor referencing Brexit or the EU. For example, "global instability", "Our relationship with other nations", "Trump" It also includes references to foreign aid, eg "Foreign aid costing us billions". With regards to the 2022 invasion of Ukraine, when respondents have said the word 'conflict', 'war' or 'invasion' it is coded as 22 – War, but if they, instead, only say words such as 'Putin', 'Ukraine' or 'Russia' without other context it has gone in foreign affairs.
+
+22. War
+This code is used for specific references to war or military intervention, eg "prospect of war", "world war 3", "The new war in Iraq", "The air strikes", "Nuclear war", "War in Ukraine", "Russia's invasion". It also includes references to the opposite, the need for peace, eg "world peace".
+
+23. Defence
+Responses which focus on either "Defence" or "Security", reference the funding of the military eg "Level of Armed Forces", or specific military spending eg "Decision on renewal of Trident", but do not mention war or conflict, are coded under this category. With regards to energy, food or fuel, responses on this topic that refer to their security are coded as defence. Examples include: "food and energy security", "Energy security" or "Making our country more resilient - security/energy wise".
+
+24. Foreign emergency
+This code is used when an individual references a foreign emergency that is not specifically about war, for example "Hong Kong", "Natural disasters" or "Genocide".
+
+25. Domestic emergency
+Relatedly this code is used when the respondent refers to a particular domestic emergency affecting Britain at the time. Examples include "Flooding", "storms" and "Grenfell Tower". It also includes respondents speculating on future potential emergencies, such as running out of energy or power blackouts in the wake of Russia's invasion of Ukraine.
+
+26. Economy-general
+This code is used for any response that refers to the economy in general, whether by simply saying "economy" or related terms such as "recession" or "Financial stability". This code also includes generic references to "supply chain issues" when there is no specific reference to what is being supplied. References to strikes and labour relations are under this code too. However, this code excludes responses that are more focused on the economic consequences of Brexit, which comes under code 15 – Europe, or the Covid-19 pandemic, which is given its own code (49 – Covid-economy). It also excludes more specific references to economic phenomena, such as unemployment and inflation, which are also coded separately as below.
+
+27. Economy-personal
+Conversely this code is used when the respondent focuses specifically on their own economic circumstances or that of their family. For example: "not being able to pay my bills", "family finances", "christmas debt", "The future prospects of my kids".
+
+28. Unemployment
+This category is used for issues relating to the labour market, so when the respondent mentioned "unemployment" directly, as well as "jobs" or simply "work", it was coded under this category. However, also included are responses that refer to the conditions of work, for example "Zero hours contracts", as well as references to labour shortages.
+
+29. Taxation
+This code is used for responses mentioning "taxation" generally, "high taxes" or specific taxes, eg "Inheritance Tax". In addition, references to "Tax avoidance" and related terms are also included here.
+
+30. Debt/deficit
+This code is used for any references to public debt or "the deficit", eg "National debt", "Government debt", "Debt Crisis". It also includes references to public waste or "overspending by Government". If a respondent just says "debt" with no other context, this code is used. References to personal debt is coded under 27 – Economy-personal above.
+
+31. Inflation
+Whenever a response focuses directly on inflation, eg "inflation and interest rate rise", this code is applied.
+
+32. Living costs
+Conversely, when the response is focused more on the cost of living, this code is used. Sometimes this phrase or variants of it are used, but the code also includes references to prices of essentials eg "the price of food", "cost of gas and electric" or "Utilities", as well as the impact of wages eg "low pay and rising prices" or "falling living standards".
+
+33. Poverty
+This code is used when the response either directly references poverty or related topics, such as "food banks" or "People suffering below the breadline".
+
+34. Austerity
+References to "austerity" directly, or cuts to public services more generally, are coded under this category. Example responses include: "Cuts", "Public Services being destroyed", "Reductions in public spending leading to lack of essential services", "cut backs at local government level".
+
+35. Inequality
+This code is used for mentions of "inequality" and related concepts, such as "the wealth divide", "the massively widening gap between rich and poor", "Creating a fair society", "the split between the haves and have nots", "The young generation being let down by baby boomers". Also coded here are references to regional inequality, eg "Inequality between London/SE and rest of UK".
+
+36. Housing
+All references to housing are put under this code, including responses such as "Lack of affordable housing", "house prices", "affordable social housing", "Housing bubble". Note that this includes references to homelessness, except where the respondent was very explicit about the relationship between poverty and homelessness, where this was coded as 33 – Poverty.
+
+37. Social care
+Where the respondent specifically said social care, or related topics such as "Care for the elderly", this code was used. This included references to other forms of state-funded care, such as for children or that for disabled people, as well as carer's allowance. Where respondents mentioned both health and social care, the response was coded by whichever was mentioned first.
+
+38. Pensions/ageing
+This code covers two main themes – any mentions of pensions specifically, and references to the effects of an ageing population, eg "Cost of aging population" or "OLD PEOPLE". It also included references to specific pensions issues, such as "WASPI Women".
+
+39. Transport/infrastructure
+This code was used when respondents mentioned either transport or infrastructure generally, but also specific types of infrastructure (eg "Lack of buses", "Railways", "pot holes on the road", "energy generation", "energy provisions"), or particular infrastructure projects ("wasting money on HS2").
+
+40. Environment
+References to the environment directly, or to climate change and its consequences, are put under this code. For example, this includes responses such as "Global warming", "Confronting climate change", "Destruction of countryside", "Environmental degradation", "Sustainability", "the decline of bees due to pesticide use". This category also includes responses that challenge the existence or importance of climate change. In addition, concerns about the effect of planning on the local environment are also coded here, eg "Building on greenbelt", "Fracking". While flooding is placed under domestic or foreign emergencies as appropriate, this code is used for references to flood prevention, or if referenced more generically as a result of climate change. Single word responses relating to "energy", "food" or "fuel" with no other context is placed in this category. Responses that worry where future energy sources will come from due to climate change concerns (eg "depleting oil supplies") go in this category, whereas general worries about where to procure energy supplies outside of the UK are coded as 17 – International trade.
+
+41. Pol values – auth
+This code – the first of those based on the political values scales – is used to code those responses that do not fit into the above policy or issue priorities, and are aligned with the authoritarian position on the social values axis. There are three main types of response coded this way. The first is issue-based, where the respondent references a political issue in line with authoritarian opinion: "The rise in identity politics", "Victim culture", "Political correctness gone mad", "Veganism". The second captures political tribalism, where the respondent negatively describes their perceived opposition: "Left liberalism – wokeness", "wokerati", "Left wing anarachists". The third more relates to outlook, demonstrating the authoritarian preference for hierarchy, order and tradition, and pessimism where this is lacking: "respect for authority", "social order", "Safety of all residents", "The importance of discipline", "social decline". Responses that say that there is a lack of respect for authority or from young people are placed in this category, eg "lack of discipline and respectfulness amongst children of school age", "No respect for authority and very poor leadership", "Respect for elders". However, when the response is a vaguer and does not specify who or what is being disrespected, or is lamenting the lack of mutual respect within society, the response is coded as 7 – Morals, eg "Lack of respect & care", "Lake of respect for each other", "Disregard and disrespect".
+
+42. Pol values – liberal
+This code is used similarly to 'Pol values – auth', but on the other side of the axis. In this way, related policy issues are responses such as "animal welfare", "state intrusion into privacy", "IP Bill", "Dignity in dying", "Protecting the BBC", "Internet neutrality". Tribal opposition is captured in responses like "Fascism", "Nationalism", "The rise of far-right groups such as Britain First", "jingoism", "alt right", "Populist nationalist authoritarianism". Finally, responses that more relate to the liberal outlook include "freedom", "Tolerance", "Access to justice", "Civil Liberties", "Freedom of speech", "Human rights", "peace and compassion".
+
+43. Pol values – right
+The next political values code captures those response that align with the right-wing pole of the economic values axis. Policy priorities mentioned put under this code include: "unions getting more power", "bbc licence fee", "Nanny state", "too much red tape", "Inefficient Government/Civil Service". Tribal opposition is represented by responses such as: "The evils of socialism" "Far Left", "Marxism", "Communists". While responses that more generally express this outlook include: "People's lack of responsibility", "Too much government", "Statism", "The Work Shy".
+
+44. Pol values – left
+The final political values code is for responses that sit on the left of the economic values axis. Policy or issues priorities mentioned that are coded this way include: "privatisation of public services", "Workers rights". While responses that are more tribally opposed to a group, ideology or identity coded like this are: "Capitalism", "Neo Liberalism", "corporatism", "Extreme Right Wing Views", "Banking Cartel", "The Bourgeoisie", "multi national companies". Finally, those responses placed in this category that reflect the left-wing economic outlook are: "Redistribution of wealth", "Social Justice", "Lack of empathy towards the less fortunate in society", "economic injustice".
+
+45. Other
+Any response that clearly mentioned a political issue or policy area but could not be placed in any of the previous categories was coded under this category.
+
+46. Uncoded
+Conversely, this code is used for those responses which cannot be coded as they are unintelligible, are excessively vague as to what aspect of politics they are getting at (eg "So many issues, not sure where to start", "attitudes", "our future"), do not relate to politics or society in any meaningful way or when it is impossible to choose between multiple possible codes.
+
+47. Referendum unspecified
+This code is used when the respondent refers to a referendum but it is not clear which one they are referencing, whether that for Scottish Independence, for leaving the EU, or another.
+
+48. Coronavirus
+This code is used from wave 20 onwards for all references to Covid-19, except those where the primary focus is on the economic effects of the pandemic. Examples include: "Coronavirus pandemic", "Covid-19", "Track, test and isolate to drastically reduce Covid 19", "People ignoring self distancing". Indirect references to Coronavirus, its effects, the response to it and its aftermath are also coded this way. This includes "getting everything back up and running", "getting freedom back in this country", "Getting life back to normal", "Loss of personal freedom", "travelling abroad" and "the fact that thousands of Indians and Pakistanis havebeen allowed into the country without being tested, therefore bringing the virus into the country". Responses that downplay the importance of Covid-19 or suggest that it is a conspiracy (e.g. "the plandemic") are also coded here.
+
+49. Covid-economy
+This code was also introduced in wave 20 to capture concern about the impact of the Covid-19 pandemic and the subsequent policy response on the economy. Examples include: "Economy during coronavirus", "Business failure due covid19", "Finding a way to protect health without killing the economy", "Managing the balance of the economy and Coronavirus", "Furlough scheme/covid".
+
+50. Gender/sexuality/family
+This code is used for references to gender, sexuality or family issues, regardless of the political perspective of the response. Specific issues in this code include abortion, LGBT+ issues, feminist and anti-feminist perspectives and the role and quality of contemporary family life include views that abortion are too easy to access, sex is male and female, transgender ideology, the patriarchy, rape culture, gender discrimination against men, homophobia, affecting me it would be transphobia, family breakdown, marriage and the family, and parental role and responsibilities, with responses about WASPI women's pensions coded as ageing/pensions, and regarding childcare where just the response childcare is in the social care category while responses about its cost like cost of childcare are in the living costs category.
+
+Here are the details of the petition:
