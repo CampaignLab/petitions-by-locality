@@ -43,7 +43,6 @@ We use the list of most important issues on pages 15-26 of the [British Election
 Accessed 29/05/2025.
 
 Citation: Fieldhouse, E., J. Green, G. Evans, J. Mellon, C. Prosser, J. Bailey, R. de Geus, H. Schmitt, C. van der Eijk, J. Griffiths, & S. Perrett. (2024) British Election Study Internet Panel Waves 1-29. DOI: 10.5255/UKDA-SN-8202-2
-Scientific Leadership Team: Professor Ed Fieldhouse, Professor Geoff Evans, Dr Jonathan Mellon, Dr Christopher Prosser. Supported by Dr Jack Bailey, Dr James Griffiths, Dr Stuart Perrett. 
 
 Topics are assigned using an LLM, which we prompt with a  slightly modified version of pages 15-24 of that document. 
 
