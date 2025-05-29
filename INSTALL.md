@@ -21,12 +21,11 @@ Follow these instructions to run the project locally.
       - If you want to use our suggested topics: leave TOPICS_PROMPT_LOCATION and TOPICS_LIST_LOCATION as they are.
       - If you want to use your own topics, point these at different files or edit topics_prompt.txt and topics.json. 
       - topics.json must be in the following format: 
-      ``` 
-{
-   "Topic Group 1": ["Subtopic", "Subtopic"],
+     `{
+   "Topic Group 1": ["Subtopic", "Subtopic"], 
    "Topic Group 2": ["Subtopic", "Subtopic"]
 }
-      ```
+      `
 4. Run `$ npm run fetch-data`. This will take a while the first time you run it - it fetches all the petitions on `petition.parliament.uk`. It then uses the AI to assign each petition a topic. Depending on your rate limit, this could take up to a few hours.
 5. Once that has finished, run `$ npm run start`.
 6. Navigate to `localhost:3000` in your browser. 
