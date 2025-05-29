@@ -1,0 +1,64 @@
+{
+  "Europe": ["Europe"],
+  "Immigration": ["Immigration"],
+  "Economy": [
+    "Economy-general",
+    "Economy-personal",
+    "Unemployment",
+    "Taxation",
+    "Debt/deficit",
+    "Inflation",
+    "Living costs"
+  ],
+  "Health": [
+    "Health",
+    "Coronavirus",
+    "COVID-economy"
+  ],
+  "Terrorism": ["Terrorism"],
+  "Inequality": [
+    "Poverty",
+    "Inequality",
+    "Housing"
+  ],
+  "Environment": ["Environment"],
+  "Austerity/spending": [
+    "Education",
+    "Welfare",
+    "Austerity",
+    "Social care",
+    "Pensions/ageing"
+  ],
+  "Negativity": [
+    "Pol-neg",
+    "Partisan-neg",
+    "Societal divides"
+  ],
+  "Other lib-auth": [
+    "Morals",
+    "Nat ident, goals loss",
+    "Racism/discrimination",
+    "Crime",
+    "Foreign affairs",
+    "War",
+    "Defence",
+    "Pol values-auth",
+    "Pol values-liberal",
+    "Gender/sexuality/family"
+  ],
+  "Other left-right": [
+    "Pol values-right",
+    "Pol values-left"
+  ],
+  "Other": [
+    "Consitutional",
+    "International trade",
+    "Devolution",
+    "Scot-ind",
+    "Foreign emergency",
+    "Domestic emergency",
+    "Other",
+    "Referendum unspecified"
+  ],
+  "Uncoded": ["Uncoded"]
+}

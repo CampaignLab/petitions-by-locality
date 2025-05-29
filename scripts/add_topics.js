@@ -10,6 +10,9 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_RATE_LIMIT = parseInt(process.env.GEMINI_RATE_LIMIT, 10);
 const GEMINI_MODEL_CODE = process.env.GEMINI_MODEL_CODE;
 
+const TOPICS_PROMPT_LOCATION = process.env.TOPICS_PROMPT_LOCATION;
+const TOPICS_LIST_LOCATION = process.env.TOPICS_LIST_LOCATION;
+
 // Initialize the GoogleGenAI client with the API key
 const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
@@ -18,6 +21,44 @@ const limiter = new Bottleneck({
   minTime: Math.ceil(60000 / GEMINI_RATE_LIMIT),
   maxConcurrent: 1,
 });
+
+
+/**
+ * Loads the topics list and prompt specified in the environment variables TOPICS_PROMPT_LOCATION and TOPICS_LIST_LOCATION.
+ * The topics list should be two-tier in the format: {"Topic group": ["Topic 1", "Topic 2"], "Topic Group": [...]}
+ * @returns {Object} topicsContainer - An object containing the topics list and the prompt text.
+ * @throws {Error} If TOPICS_PROMPT_LOCATION or TOPICS_LIST_LOCATION are not defined, or if file reading/parsing fails.
+ */
+function loadTopicsPromptAndHierarchy() {
+  if (!TOPICS_PROMPT_LOCATION) {
+    throw new Error('TOPICS_PROMPT_LOCATION environment variable is not set.');
+  }
+  if (!TOPICS_LIST_LOCATION) {
+    throw new Error('TOPICS_LIST_LOCATION environment variable is not set.');
+  }
+
+  let topicsPrompt = '';
+  let topicsList = {};
+
+  try {
+    // Load the topics prompt
+    topicsPrompt = fs.readFileSync(TOPICS_PROMPT_LOCATION, 'utf-8');
+  } catch (error) {
+    console.error(`Error loading topics prompt from ${TOPICS_PROMPT_LOCATION}:`, error.message);
+    throw new Error(`Failed to load topics prompt: ${error.message}`);
+  }
+
+  try {
+    // Load and parse the topics list
+    const rawTopicsList = fs.readFileSync(TOPICS_LIST_LOCATION, 'utf-8');
+    topicsList = JSON.parse(rawTopicsList);
+  } catch (error) {
+    console.error(`Error loading or parsing topics list from ${TOPICS_LIST_LOCATION}:`, error.message);
+    throw new Error(`Failed to load or parse topics list: ${error.message}`);
+  }
+
+  return { topicsPrompt, topicsList };
+}
 
 /**
  * Makes a request to the Gemini API.
@@ -88,8 +129,10 @@ const LLMWrapper = limiter.wrap(async function (prompt) {
  * Extracts the topic of a petition using an LLM.
  * @param {Object} petition - The petition object - the schema is from petitions.parliament.uk.
  * @param {Object} savedPetitionsObject - An object containing previously saved topics for petitions.
+ * @param {string} topicsPrompt - The base prompt text for topic extraction.
+ * @param {Object} topicsList - An object containing a two-tier hierarchy of topics.
  */
-async function extractTopic(petition, savedPetitionsObject) {
+async function extractTopic(petition, savedPetitionsObject, topicsPrompt, topicsList) {
   if (savedPetitionsObject && petition.id in savedPetitionsObject) {
     // console.log(`Petition ${petition.id} already has a topic: ${savedPetitionsObject[petition.id]}`);
     return savedPetitionsObject[petition.id];
@@ -100,16 +143,15 @@ async function extractTopic(petition, savedPetitionsObject) {
     `Background:\n${petition.attributes.background}\n` +
     `Additional details:\n${petition.attributes.additional_details}\n`;
 
-  const promptText = `Your job is to extract the topic of a petition from the following description. A petition can only have one topic. Please provide just the topic, without any additional information or context. The list of topics is: brexit, the eu, coronavirus, business, economy, transport, work and incomes, communities, crime, culture, media and sport, family and civil law, immigration, justice, security, devolution, elections, government, local government, parliament, climate change, energy, environment, sciences, technology, education, families and social services, health, housing and planning, welfare and pensions, africa, americas, asia, europe, middle east, defence, institutions, other.
-Do not use any other topic. If the petition does not fit any topic, say other. Do not make up your own topics. Remember, you are working in the UK context.
 
-Here is the description:
+  const promptText = `${topicsPrompt}
 
 ${consolidatedDescriptionText}
 
-Please provide the topic:`;
+Please provide the topic and nothing else:`;
 
-  const petitionTopic = await LLMWrapper([{ text: promptText }]);
+  const finalPrompt = [{ text: promptText }];
+  const petitionTopic = await LLMWrapper(finalPrompt);
   return petitionTopic.trim();
 }
 
@@ -119,6 +161,12 @@ Please provide the topic:`;
  * @param {string} [savedPetitionTopicsPath=null] - The path to previously saved petition topics, if any. Use this to ensure chaching, so you don't need to make 5000 llm requests every time you update.
  */
 async function main(outputPath, savedPetitionTopicsPath = null) {
+  // Load the topics prompt and hierarchy once at the beginning
+  const { topicsPrompt, topicsList } = loadTopicsPromptAndHierarchy();
+  // console.log('Loaded Topics Prompt:', topicsPrompt); // Uncomment for debugging
+  // console.log('Loaded Topics List:', topicsList);     // Uncomment for debugging
+
+
   let savedPetitionTopics = {};
 
   if (savedPetitionTopicsPath) {
@@ -138,7 +186,8 @@ async function main(outputPath, savedPetitionTopicsPath = null) {
     progressBar.update(counter);
 
     const petition = petitions.rawPetitionsData[key];
-    const petitionTopic = await extractTopic(petition, savedPetitionTopics);
+    // Pass the loaded topicsPrompt and topicsList to extractTopic
+    const petitionTopic = await extractTopic(petition, savedPetitionTopics, topicsPrompt, topicsList);
 
     const petitionID = petition.id;
     topicsByPetition[petitionID] = petitionTopic;
@@ -166,3 +215,4 @@ export { main };
 // const outputPathForTopics = './data/topics_by_petition.json';
 // const savedTopicsPathForRun = './data/SAVED_topics_by_petition.json';
 // main(outputPathForTopics, savedTopicsPathForRun).catch(console.error);
+

@@ -33,7 +33,7 @@ document.getElementById('loadDataBtn').addEventListener('click', async function(
 
     try {
         // Fetch constituency data from the local server
-        const constituencyResponse = await fetch('http://localhost:3000/constituenciesData');
+        const constituencyResponse = await fetch(`${API_STEM_URL}/constituenciesData`);
         if (!constituencyResponse.ok) {
             throw new Error(`HTTP error fetching constituency data! status: ${constituencyResponse.status}`);
         }
@@ -51,21 +51,21 @@ document.getElementById('loadDataBtn').addEventListener('click', async function(
         }
 
         // Fetch topics data from the local server
-        const topicsResponse = await fetch('http://localhost:3000/topicsData');
+        const topicsResponse = await fetch(`${API_STEM_URL}/topicsData`);
         if (!topicsResponse.ok) {
             throw new Error(`HTTP error fetching topics data! status: ${topicsResponse.status}`);
         }
         petitionTopics = await topicsResponse.json();
 
         // Fetch constituency boundaries data 
-        const constituencyBoundariesResponse = await fetch('http://localhost:3000/constituencyBoundaries');
+        const constituencyBoundariesResponse = await fetch(`${API_STEM_URL}/constituencyBoundaries`);
         if (!constituencyBoundariesResponse.ok) {
             throw new Error(`HTTP error fetching constituency boundaries data! status: ${constituencyBoundariesResponse.status}`);
         }
         window.constituencyBoundariesGeoJSON = await constituencyBoundariesResponse.json(); // Store boundaries data globally
 
         // Fetch constituency populations data 
-        const populationsResponse = await fetch('http://localhost:3000/constituencyPopulations');
+        const populationsResponse = await fetch(`${API_STEM_URL}/constituencyPopulations`);
         if (!populationsResponse.ok) {
             throw new Error(`Failed to fetch constituency populations data! status: ${populationsResponse.status}`);
         }

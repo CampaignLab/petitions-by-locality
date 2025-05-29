@@ -59,6 +59,10 @@ app.get('/topicsData', (req, res) => {
     res.sendFile(path.join(__dirname, 'data', 'topics_by_petition.json'));
 });
 
+app.get('/topicsHierarchy', (req, res) => {
+    res.sendFile(path.join(__dirname, 'constant_data', 'topics.json'));
+});
+
 app.get('/constituencyBoundaries', (req, res) => {
     res.sendFile(path.join(__dirname, 'constant_data', 'Westminster_Parliamentary_Constituencies_July_2024_Boundaries_UK_BUC_4872633423108313063.geojson'));
 })
