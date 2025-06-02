@@ -21,7 +21,7 @@ async function fetchAllPetitions(outputPath) {
     const allPetitions = [];
     let count = 0;
 
-    console.log(`Fetching petitions. This may take a while.\nCounter updates every 50.`);
+    console.log(`Fetching petitions. This may take a while.\nCounter updates every 5.`);
 
     while (url) {
         const listPage = await fetchJson(url);
