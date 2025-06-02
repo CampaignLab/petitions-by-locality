@@ -89,9 +89,15 @@ app.get('/constituencyBoundaries', (req, res) => {
     res.sendFile(path.join(__dirname, 'constant_data', 'Westminster_Parliamentary_Constituencies_July_2024_Boundaries_UK_BUC_4872633423108313063.geojson'));
 });
 
-app.listen(port, () => {
-    console.log(`
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(port, () => {
+        console.log(`
 Petitions by Locality running on port ${port}.
 ${useS3 ? 'Using S3 for constituencies and topics data.' : 'Using local data.'}
 `);
-});
+    });
+}
+
+// Export for Vercel
+export default app;
