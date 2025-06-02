@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node --watch app.js",
+    "start-vercel": "node app.js --use-s3",
     "fetch-data": "node scripts/fetch_data.js --extract_topics",
     "build-docs": "jsdoc -d docs scripts/ views/scripts/ README.md"
   },
