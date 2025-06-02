@@ -19,7 +19,7 @@ const useS3 = args.includes('--use-s3');
 const constituenciesDataURL = 'https://petitions-by-locality-bucket.s3.eu-west-2.amazonaws.com/data/constituencies_data.json';
 const topicsDataURL = 'https://petitions-by-locality-bucket.s3.eu-west-2.amazonaws.com/data/topics_by_petition.json';
 
-const viewsPath = path.join(__dirname, 'views');
+const viewsPath = path.join(__dirname, 'public');
 app.use(express.static(viewsPath));
 
 // Serve home page
