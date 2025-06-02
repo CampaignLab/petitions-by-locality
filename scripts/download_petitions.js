@@ -38,7 +38,7 @@ async function fetchAllPetitions(outputPath) {
                 allPetitions.push(detail.data);
 
                 count++;
-                if (count % 50 == 0) process.stdout.write(`\rProcessed petitions: ${count}`);
+                if (count % 5 == 0) process.stdout.write(`\rProcessed petitions: ${count}`);
             } catch (err) {
                 console.error(`Failed to fetch petition detail: ${detailUrl}`, err.message);
             }
