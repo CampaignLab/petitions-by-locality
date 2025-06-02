@@ -22,6 +22,11 @@ const topicsDataURL = 'https://petitions-by-locality-bucket.s3.eu-west-2.amazona
 const viewsPath = path.join(__dirname, 'public');
 app.use(express.static(viewsPath));
 
+// Test route
+app.get('/test', (req, res) => {
+    res.json({ message: 'Routes are working!', timestamp: new Date().toISOString() });
+});
+
 // Serve home page
 app.get('/', (req, res) => {
     res.sendFile(path.join(viewsPath, 'index.html'));
@@ -29,7 +34,11 @@ app.get('/', (req, res) => {
 
 // Conditionally stream constituencies data
 app.get('/constituenciesData', (req, res) => {
+    console.log('Route hit, useS3:', useS3);
+    console.log('__dirname:', __dirname);
+    
     if (useS3) {
+        console.log('Using S3, fetching from:', constituenciesDataURL);
         https.get(constituenciesDataURL, (s3Res) => {
             if (s3Res.statusCode !== 200) {
                 res.status(s3Res.statusCode).send(`Failed to fetch data: ${s3Res.statusCode}`);
@@ -42,7 +51,20 @@ app.get('/constituenciesData', (req, res) => {
         });
     } else {
         const localPath = path.join(__dirname, 'data', 'constituencies_data.json');
-        res.sendFile(localPath);
+        console.log('Using local file:', localPath);
+        
+        // Check if file exists
+        if (fs.existsSync(localPath)) {
+            res.sendFile(localPath);
+        } else {
+            console.log('File not found at:', localPath);
+            res.status(404).json({ 
+                error: 'File not found', 
+                path: localPath,
+                __dirname: __dirname,
+                useS3: useS3
+            });
+        }
     }
 });
 
