@@ -21,7 +21,7 @@ async function fetchAllPetitions(outputPath) {
     const allPetitions = [];
     let count = 0;
 
-    console.log(`Fetching petitions. This may take a while.\nCounter updates every 50.`);
+    console.log(`Fetching petitions. This may take a while.\nCounter updates every 5.`);
 
     while (url) {
         const listPage = await fetchJson(url);
@@ -38,7 +38,7 @@ async function fetchAllPetitions(outputPath) {
                 allPetitions.push(detail.data);
 
                 count++;
-                if (count % 50 == 0) process.stdout.write(`\rProcessed petitions: ${count}`);
+                if (count % 5 == 0) process.stdout.write(`\rProcessed petitions: ${count}`);
             } catch (err) {
                 console.error(`Failed to fetch petition detail: ${detailUrl}`, err.message);
             }
