@@ -19,7 +19,7 @@ The structure of the app itself is:
   - download_petitions.js - gets the petitions from the petitions.parliament.uk site 
   - fetch_data.js - runs all the other data getting/annotatating scripts. 
   - process_petitions.js - does the actual grouping by locality. 
-- views/ contains the front end 
+- public/ contains the front end 
   - index.html - the app is a single-page app, all of which are viewed here. THere are three views: "by locality", which shows the petitions in a given locality and allows filtering; "by topics", which visualises the topics, and "about", which is static content with licences. 
   - scripts/ 
     - localities.js - calculates salience, handles the filtering and displaying petitions including their details. 

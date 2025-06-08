@@ -459,18 +459,31 @@ tr:nth-child(even) {
 @media (max-width: 600px) {
     .controls-container {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .control {
-        width: 100%; /* Full width on small screens */
-        max-width: none; /* Remove max-width constraint */
+        width: 100%;
+        max-width: none;
+        box-sizing: border-box;
     }
 
-    /* Adjust custom select for mobile */
     .custom-select-container {
         width: 100%;
         max-width: none;
+        flex-grow: 1;
+        box-sizing: border-box;
+        /* margin: 0; */
+        /* padding: 0; */
+    }
+
+    .custom-select-input {
+        width: 100%;
+        box-sizing: border-box;
     }
 
     table,
@@ -488,7 +501,11 @@ tr:nth-child(even) {
 
     td {
         position: relative;
+        /* Keep padding-left for the label, but let flexbox handle alignment of content */
         padding-left: 50%;
+        display: flex; /* FIX: Make the td a flex container */
+        align-items: center; /* Vertically center the content */
+        justify-content: center; /* FIX: Horizontally center content in the remaining space */
     }
 
     td::before {
@@ -499,6 +516,8 @@ tr:nth-child(even) {
         padding-left: 1rem;
         font-weight: bold;
         white-space: nowrap;
+        /* Ensure the ::before does not interfere with flexbox flow */
+        align-self: flex-start; /* Aligns to the start of the cross-axis */
     }
 
     /* Specific labels for mobile view */
@@ -506,7 +525,7 @@ tr:nth-child(even) {
     td:nth-of-type(2)::before { content: 'Signatures:'; }
     td:nth-of-type(3)::before { content: 'Local Salience:'; }
     td:nth-of-type(4)::before { content: 'Salience Ratio:'; }
-    td:nth-of-type(5)::before { content: 'Topic:'; } /* New label for Topic */
+    td:nth-of-type(5)::before { content: 'Topic:'; }
     td:nth-of-type(6)::before { content: 'UK Total:'; }
     td:nth-of-type(7)::before { content: 'State:'; }
     td:nth-of-type(8)::before { content: 'Written response?:'; }
@@ -514,6 +533,33 @@ tr:nth-child(even) {
     td:nth-of-type(10)::before { content: 'Created:'; }
     td:nth-of-type(11)::before { content: ''; } /* For the details button */
 
+    /* FIX: Ensure hidden columns stay hidden on mobile unless .show-details is active */
+    /* Target specific classes on the <td> elements for higher specificity */
+    table:not(.show-details) td.uk-wide-info-cell,
+    table:not(.show-details) td.response-cell,
+    table:not(.show-details) td.details-cell,
+    table:not(.show-details) td.topic-col,
+    table:not(.show-details) th.uk-wide-info-header,
+    table:not(.show-details) th.response-header,
+    table:not(.show-details) th.details-header {
+        display: none !important; /* Force them to be hidden */
+    }
+
+    /* FIX: When .show-details IS present, display them as block elements on mobile */
+    /* Target specific classes on the <td> elements for higher specificity */
+    .show-details td.uk-wide-info-cell,
+    .show-details td.response-cell,
+    .show-details td.details-cell,
+    .show-details td.topic-col {
+        display: block !important; /* Force to block when details are shown on mobile */
+    }
+    .show-details th.uk-wide-info-header,
+    .show-details th.response-header,
+    .show-details th.details-header {
+        display: block !important; /* Force to block for group headers on mobile */
+        text-align: left; /* Adjust alignment for stacked layout */
+        padding-left: 1rem; /* Match other td padding */
+    }
 
     tr {
         margin-bottom: 1rem;
@@ -524,6 +570,10 @@ tr:nth-child(even) {
         text-align: left;
         padding-top: 1rem;
     }
+
+    /* No specific text-align on td:nth-of-type(3/4) now, as flexbox handles it */
+    /* .salience-category-cell and .salience-ratio-cell don't need explicit display/margin-auto here
+       as they are children of a flex container and will be centered by justify-content: center */
 
     /* Remove all vertical lines in mobile view */
     .show-details td:nth-child(2),
@@ -541,13 +591,12 @@ tr:nth-child(even) {
 
     /* Ensure expanded details row behaves correctly in mobile */
     .petition-details-row {
-        display: block !important; /* Override inline style for mobile if needed */
+        display: block !important;
         width: 100%;
         box-sizing: border-box;
     }
 
-    /* The grid container will already handle single column on small screens */
     .petition-details-grid-container {
-        padding-left: 1rem; /* Adjust padding for mobile */
+        padding-left: 1rem;
     }
 }
