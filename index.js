@@ -11,16 +11,21 @@ const port = 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Command-line flag
+// Command-line flag - always use S3 in production/Vercel
 const args = process.argv.slice(2);
-const useS3 = args.includes('--use-s3');
+const useS3 = args.includes('--use-s3') || process.env.VERCEL || process.env.NODE_ENV === 'production';
 
 // S3 URLs
 const constituenciesDataURL = 'https://petitions-by-locality-bucket.s3.eu-west-2.amazonaws.com/data/constituencies_data.json';
 const topicsDataURL = 'https://petitions-by-locality-bucket.s3.eu-west-2.amazonaws.com/data/topics_by_petition.json';
 
-const viewsPath = path.join(__dirname, 'views');
+const viewsPath = path.join(__dirname, 'public');
 app.use(express.static(viewsPath));
+
+// Test route
+app.get('/test', (req, res) => {
+    res.json({ message: 'Routes are working!', timestamp: new Date().toISOString() });
+});
 
 // Serve home page
 app.get('/', (req, res) => {
@@ -41,8 +46,16 @@ app.get('/constituenciesData', (req, res) => {
             res.status(500).send(`Error fetching data from S3: ${err.message}`);
         });
     } else {
+        // Local development fallback
         const localPath = path.join(__dirname, 'data', 'constituencies_data.json');
-        res.sendFile(localPath);
+        if (fs.existsSync(localPath)) {
+            res.sendFile(localPath);
+        } else {
+            res.status(404).json({ 
+                error: 'Local file not found - run with --use-s3 flag or check data directory',
+                path: localPath
+            });
+        }
     }
 });
 
@@ -89,9 +102,15 @@ app.get('/constituencyBoundaries', (req, res) => {
     res.sendFile(path.join(__dirname, 'constant_data', 'Westminster_Parliamentary_Constituencies_July_2024_Boundaries_UK_BUC_4872633423108313063.geojson'));
 });
 
-app.listen(port, () => {
-    console.log(`
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(port, () => {
+        console.log(`
 Petitions by Locality running on port ${port}.
 ${useS3 ? 'Using S3 for constituencies and topics data.' : 'Using local data.'}
 `);
-});
+    });
+}
+
+// Export for Vercel
+export default app;
